@@ -19,7 +19,6 @@ crypto key generate rsa
 1024
 
 spanning-tree mode rapid-pvst
-spanning-tree portfast default
 spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
 
 ip access-list extended SSH
@@ -105,3 +104,4 @@ exit
 exit
 
 wr
+
