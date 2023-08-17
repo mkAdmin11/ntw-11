@@ -1,0 +1,111 @@
+
+en
+conf t
+
+service password-encryption
+hostname main_access_sw10
+
+aaa new-model
+aaa authentication login default local 
+username admin secret admin
+
+ip ssh version 2
+ip domain-name my.local
+
+crypto key generate rsa
+yes
+1024
+
+spanning-tree mode rapid-pvst
+spanning-tree portfast default
+spanning-tree vlan 1,100,101,102,103,253,254,255,1002-1005 priority 40960
+
+ip access-list extended SSH
+permit tcp 10.1.255.0 0.0.0.255 any
+deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+line vty 5 15
+access-class SSH in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+vlan 100
+name IT
+exit
+
+vlan 101
+name PROD
+exit
+
+vlan 102
+name SALE
+exit
+
+vlan 103
+name CLERK
+exit
+
+vlan 253
+name PRINT
+exit
+
+vlan 254
+name AP
+exit
+
+vlan 255
+name MGMT
+exit
+
+interface Vlan255
+description MGMT
+ip address 10.1.255.10 255.255.255.0
+exit
+
+interface GigabitEthernet0/1
+description UPLINK
+switchport mode trunk
+switchport trunk allowed vlan 100,101,102,103,253,254,255
+exit
+
+interface GigabitEthernet0/2
+description UPLINK_RESERV
+switchport mode trunk
+switchport trunk allowed vlan 100,101,102,103,253,254,255
+spanning-tree vlan 100,101,102,103,253,254,255 cost 25
+exit
+
+interface FastEthernet0/1
+description AP
+switchport mode access
+switchport access vlan 254
+switchport port-security
+switchport port-security mac-address sticky 
+switchport port-security violation restrict
+switchport port-security aging time 1440
+spanning-tree portfast
+spanning-tree bpduguard enable
+exit
+
+interface range FastEthernet0/2-24
+shutdown
+exit
+
+exit
+
+wr
