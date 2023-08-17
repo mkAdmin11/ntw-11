@@ -1,0 +1,119 @@
+
+en
+conf t
+
+service password-encryption
+
+aaa new-model
+
+username admin secret admin
+enable secret passwd
+
+aaa authentication login default local 
+aaa authentication enable default enable
+
+ip ssh version 2
+ip domain-name my.local
+
+crypto key generate rsa
+1024
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
+
+ip access-list extended SSH
+permit tcp 10.1.255.0 0.0.0.127 any
+deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+line vty 5 15
+access-class SSH in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+vlan 100
+name MGMT
+exit
+
+vlan 200
+name USERS
+exit
+
+vlan 300
+name WLAN
+exit
+
+vlan 400
+name VOIP
+exit
+
+vlan 500
+name PRINT
+exit
+
+interface Vlan100
+description MGMT
+ip address 10.1.255.5 255.255.255.128
+exit
+
+interface GigabitEthernet0/1
+description UPLINK_MAIN_CORE_SW_01
+switchport mode trunk
+switchport trunk allowed vlan 100,200,300,400,500
+exit
+
+interface GigabitEthernet0/2
+description RESERV_UPLINK_MAIN_CORE_SW_02
+switchport mode trunk
+switchport trunk allowed vlan 100,200,300,400,500
+spanning-tree vlan 1,100,200,300,400,500,1002-1005 cost 25
+exit
+
+interface FastEthernet0/1
+description USERS
+switchport mode access
+switchport access vlan 200
+switchport port-security
+switchport port-security mac-address sticky 
+switchport port-security maximum 2
+switchport port-security violation restrict
+switchport port-security aging time 1440
+spanning-tree portfast
+spanning-tree bpduguard enable
+exit
+
+interface FastEthernet0/2
+description PRINT
+switchport mode access
+switchport access vlan 500
+switchport port-security
+switchport port-security mac-address sticky 
+switchport port-security maximum 2
+switchport port-security violation restrict
+switchport port-security aging time 1440
+spanning-tree portfast
+spanning-tree bpduguard enable
+exit
+
+interface range FastEthernet0/3-24
+shutdown
+exit
+
+exit
+
+wr
+
