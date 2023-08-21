@@ -154,16 +154,16 @@ no shutdown
 exit
 
 interface Port-channel1
-description RESERVE_MAIN_CORE_SW_02
+description RESERVE_MAIN_CORE_SW_01
 switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
 exit
 
 interface GigabitEthernet0/1
-description UPLINK_MAIN_ASA_01
+description UPLINK_MAIN_ASA_02
 no switchport
-ip address 10.0.1.6 255.255.255.252
+ip address 10.0.2.6 255.255.255.252
 no shutdown
 exit
 
