@@ -21,6 +21,9 @@ crypto key generate rsa
 spanning-tree mode rapid-pvst
 spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
 
+ip dhcp snooping
+ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
+
 ip access-list extended SSH
 permit tcp 10.1.255.0 0.0.0.127 any
 deny ip any any
@@ -74,6 +77,7 @@ interface GigabitEthernet0/1
 description UPLINK_MAIN_CORE_SW_01
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
+ip dhcp snooping trust
 exit
 
 interface GigabitEthernet0/2
@@ -81,6 +85,7 @@ description RESERV_UPLINK_MAIN_CORE_SW_02
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
 spanning-tree vlan 1,100,200,300,400,500,1002-1005 cost 25
+ip dhcp snooping trust
 exit
 
 interface FastEthernet0/1
