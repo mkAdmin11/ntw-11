@@ -21,6 +21,9 @@ crypto key generate rsa
 spanning-tree mode rapid-pvst
 spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
 
+ip dhcp snooping
+ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
+
 ip access-list extended SSH
 permit tcp 10.1.255.0 0.0.0.127 any
 deny ip any any
@@ -94,6 +97,7 @@ switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast
 spanning-tree bpduguard enable
+ip dhcp snooping trust
 exit
 
 interface range FastEthernet0/2-24
