@@ -54,6 +54,10 @@ exit
 
 spanning-tree mode rapid-pvst
 
+interface FastEthernet0/0
+no sh
+exit
+
 interface FastEthernet0/0.100
 description MGMT
 encapsulation dot1Q 100
