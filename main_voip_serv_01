@@ -1,0 +1,100 @@
+
+en
+
+vlan database
+vlan 100 name MGMT
+vlan 200 name USERS
+vlan 300 name WLAN
+vlan 400 name VOIP
+vlan 500 name PRINT
+exit
+
+conf t
+
+clock timezone MSK 3
+ntp server 10.1.255.126
+
+service password-encryption
+
+aaa new-model
+
+username admin secret admin
+enable secret passwd
+
+aaa authentication login default local
+aaa authentication enable default enable
+
+ip ssh version 2
+ip domain-name my.local
+
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+permit tcp 10.1.255.0 0.0.0.127 any
+deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line aux 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+spanning-tree mode rapid-pvst
+
+interface FastEthernet0/0.100
+description MGMT
+encapsulation dot1Q 100
+ip address 10.1.255.124 255.255.255.128
+exit
+
+interface FastEthernet0/0.400
+description VOIP
+encapsulation dot1Q 400
+ip address 10.1.4.254 255.255.255.0
+exit
+
+telephony-service 
+max-ephones 2
+max-dn 2
+ip source-address 10.1.4.254 port 2000
+exit
+
+ephone-dn 1
+
+number 1001
+exit
+
+ephone-dn 2
+
+number 1002
+exit
+
+ephone 1
+mac-address 0001.C9E9.3776
+button 1:1
+exit
+
+ephone 2
+mac-address 0004.9ae6.1d49
+button 1:2
+exit
+
+exit
+
+wr
+
+exit
+
