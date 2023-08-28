@@ -2,6 +2,9 @@
 en
 conf t
 
+clock timezone MSK 3
+ntp server 10.1.255.126
+
 service password-encryption
 
 aaa new-model
