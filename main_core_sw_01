@@ -17,7 +17,7 @@ enable secret level 15 5 passwd
 tacacs-server host 10.1.255.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
-aaa authentication enable default enable
+aaa authentication enable default group tacacs+ local enable
 
 ip ssh version 2
 ip ssh time-out 60
@@ -27,16 +27,7 @@ ip domain-name my.local
 crypto key generate rsa
 1024
 
-spanning-tree mode rapid-pvst
-spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
-
-ip dhcp snooping
-ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
-ip dhcp snooping information option allow-untrusted
-!ip dhcp relay information trust-all
-!no ip dhcp snooping information option
-
-ip access-list extended SSH
+ip access-list extended SSH_ACL
 permit tcp 10.1.255.0 0.0.0.127 any
 deny ip any any
 exit
@@ -46,15 +37,13 @@ login authentication default
 privilege level 15
 exit
 
-line vty 0 4
-access-class SSH in
+line aux 0
 login authentication default
-transport input ssh
 privilege level 15
 exit
 
-line vty 5 15
-access-class SSH in
+line vty 0 4
+access-class SSH_ACL in
 login authentication default
 transport input ssh
 privilege level 15
@@ -79,6 +68,15 @@ exit
 vlan 500
 name PRINT
 exit
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 1,100,200,300,400,500,1002-1005 root primary
+
+ip dhcp snooping
+ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
+ip dhcp snooping information option allow-untrusted
+!ip dhcp relay information trust-all
+!no ip dhcp snooping information option
 
 interface Vlan100
 description MGMT
