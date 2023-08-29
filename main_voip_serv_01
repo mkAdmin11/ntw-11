@@ -79,7 +79,7 @@ exit
 telephony-service 
 max-ephones 2
 max-dn 2
-ip source-address 10.1.4.254 port 2000
+ip source-address 10.1.4.254 port 2222
 exit
 
 ephone-dn 1
@@ -95,11 +95,13 @@ exit
 ephone 1
 mac-address 0001.C9E9.3776
 button 1:1
+type 7960
 exit
 
 ephone 2
 mac-address 0004.9ae6.1d49
 button 1:2
+type 7960
 exit
 
 exit
