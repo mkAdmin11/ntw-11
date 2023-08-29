@@ -105,11 +105,12 @@ switchport access vlan 200
 switchport voice vlan 400
 switchport port-security
 ! switchport port-security mac-address sticky 
-! switchport port-security maximum 2
+switchport port-security maximum 3
 switchport port-security violation restrict
-! switchport port-security aging time 1440
-switchport port-security mac-address 0001.C9E9.3776
-switchport port-security mac-address 00D0.9766.5201
+switchport port-security aging time 1440
+switchport port-security mac-address sticky 0001.C9E9.3776
+switchport port-security mac-address sticky 0005.5E2D.001
+switchport port-security mac-address sticky 00D0.9766.5201
 spanning-tree portfast
 spanning-tree bpduguard enable
 exit
