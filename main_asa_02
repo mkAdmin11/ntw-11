@@ -1,0 +1,50 @@
+
+en
+
+
+conf t
+
+ntp server 10.1.255.126
+ntp trusted-key 4294967282
+
+enable password passwd level 15
+username admin password passwd encrypted
+
+aaa authentication ssh console LOCAL
+aaa authentication tel console LOCAL
+
+domain-name my.local
+crypto key generate rsa general-keys modulus 1024
+yes
+
+access-list SSH_ACL permit tcp 10.1.255.0 255.255.255.128 any 
+
+interface GigabitEthernet1/1
+description MAIN_BORDER_01
+nameif OUTSIDE
+security-level 0
+ip address 10.0.2.2 255.255.255.252
+no sh
+exit
+
+interface GigabitEthernet1/2
+description MAIN_CORE_SW_01
+nameif INSIDE
+security-level 100
+ip address 10.0.2.5 255.255.255.252
+no sh
+exit
+
+router ospf 65528
+router-id 4.4.4.4
+network 10.0.2.0 255.255.255.252 area 1
+network 10.0.2.4 255.255.255.252 area 1
+neighbor 10.0.1.6
+neighbor 10.0.1.1
+exit
+
+exit
+
+write memory
+
+exit
