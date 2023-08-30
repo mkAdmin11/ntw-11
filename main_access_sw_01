@@ -104,18 +104,28 @@ switchport mode access
 switchport access vlan 200
 switchport voice vlan 400
 switchport port-security
-! switchport port-security mac-address sticky 
-switchport port-security maximum 3
-switchport port-security violation restrict
-switchport port-security aging time 1440
+switchport port-security maximum 4
 switchport port-security mac-address sticky 0001.C9E9.3776
 switchport port-security mac-address sticky 0005.5E2D.0001
+switchport port-security mac-address sticky 0005.5E2D.0002
 switchport port-security mac-address sticky 00D0.9766.5201
+switchport port-security violation restrict
+! switchport port-security aging time 1440
+! switchport port-security mac-address sticky 
 spanning-tree portfast
 spanning-tree bpduguard enable
 exit
 
-interface range FastEthernet0/2-24
+interface FastEthernet0/2
+description WLC_&_WIFI_USERS
+switchport mode trunk
+switchport trunk allowed vlan 100,300
+switchport trunk native vlan 100
+spanning-tree portfast trunk
+spanning-tree bpduguard enable
+exit
+
+interface range FastEthernet0/3-24
 shutdown
 exit
 
