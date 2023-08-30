@@ -111,6 +111,19 @@ spanning-tree bpduguard enable
 ip dhcp snooping trust
 exit
 
+interface FastEthernet0/2
+description MAIN_WLC_01
+switchport mode access
+switchport access vlan 100
+switchport port-security
+switchport port-security mac-address sticky 
+switchport port-security maximum 2
+switchport port-security violation restrict
+switchport port-security aging time 1440
+spanning-tree portfast
+spanning-tree bpduguard enable
+exit
+
 interface FastEthernet0/3
 description MAIN_VOIP_SERVER_01
 switchport mode trunk
