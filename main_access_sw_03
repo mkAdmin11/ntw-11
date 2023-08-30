@@ -77,6 +77,7 @@ spanning-tree vlan 1,100,200,300,400,500,1002-1005 priority 40960
 
 ip dhcp snooping
 ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
+ip dhcp snooping information option allow-untrusted
 
 interface Vlan100
 description MGMT
