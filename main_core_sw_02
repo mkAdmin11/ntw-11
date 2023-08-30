@@ -2,15 +2,19 @@
 en
 conf t
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ВРЕМЯ
 clock timezone MSK 3
 ntp server 10.1.255.126
 ntp trusted-key 4294967282
 !ntp update-calendar
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ТРАНСЛЯЦИЯ DNS
 no ip domain-lookup
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! СЕРВИС ШИФРОВАНИЯ
 service password-encryption
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ААА
 aaa new-model
 
 username admin privilege 15 secret passwd
@@ -20,6 +24,7 @@ tacacs-server host 10.1.255.126 key tacasc_server_pass
 aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ local enable
 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SSH
 ip ssh version 2
 ip ssh time-out 60
 ip ssh authentication-retries 3
@@ -185,6 +190,17 @@ shutdown
 exit
 
 ip routing
+
+router ospf 65528
+router-id 6.6.6.6
+network 10.0.2.4 0.0.0.3 area 1
+network 10.1.255.0 0.0.0.127 area 1
+network 10.1.2.0 0.0.0.255 area 1
+network 10.1.3.0 0.0.0.255 area 1
+network 10.1.4.0 0.0.0.255 area 1
+network 10.1.5.0 0.0.0.127 area 1
+neighbor 10.0.2.5
+exit
 
 ip access-list extended MGMT_ACL
 remark PERMIT_ANY
