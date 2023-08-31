@@ -80,6 +80,9 @@ router ospf 65528
 router-id 1.1.1.1
 network 10.0.1.0 0.0.0.3 area 1
 network 10.0.0.0 0.0.0.3 area 0
+neighbor 10.0.1.2
+neighbor 10.0.0.2
+area 1 stub
 exit
 
 exit
