@@ -1,0 +1,91 @@
+
+en
+
+vlan database
+vlan 100 name MGMT
+vlan 200 name USERS
+vlan 300 name WLAN
+vlan 400 name VOIP
+vlan 500 name PRINT
+exit
+
+conf t
+
+clock timezone MSK 3
+ntp server 10.1.255.126
+ntp trusted-key 4294967282
+!ntp update-calendar
+
+no ip domain-lookup
+
+service password-encryption
+
+aaa new-model
+
+username admin privilege 15 secret passwd
+enable secret level 15 5 passwd
+tacacs-server host 10.1.255.126 key tacasc_server_pass
+
+aaa authentication login default group tacacs+ local
+aaa authentication enable default group tacacs+ local enable
+
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+ip domain-name my.local
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+permit tcp 10.1.255.0 0.0.0.127 any
+deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line aux 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+spanning-tree mode rapid-pvst
+
+interface GigabitEthernet0/0
+description INTERNET
+ip address 172.1.0.2 255.255.255.252
+exit
+
+interface GigabitEthernet0/1
+description MAIN_ASA_01
+ip address 10.0.1.1 255.255.255.252
+exit
+
+interface GigabitEthernet0/1/0
+description MAIN_BORDER_02
+ip addres 10.0.0.1 255.255.255.252
+exit
+
+router ospf 65528
+router-id 1.1.1.1
+network 10.0.1.0 0.0.0.3 area 1
+network 10.0.0.0 0.0.0.3 area 0
+exit
+
+exit
+
+copy running-config startup-config 
+
+
+exit
+
