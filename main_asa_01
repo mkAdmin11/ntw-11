@@ -43,6 +43,11 @@ neighbor 10.0.1.6
 neighbor 10.0.1.1
 exit
 
+policy-map global_policy
+class inspection_default
+inspect icmp 
+exit
+
 exit
 
 write memory
