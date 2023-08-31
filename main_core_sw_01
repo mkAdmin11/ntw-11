@@ -77,7 +77,6 @@ ip dhcp snooping
 ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
 ip dhcp snooping information option allow-untrusted
 !ip dhcp relay information trust-all
-!no ip dhcp snooping information option
 
 interface Vlan100
 description MGMT
