@@ -8,7 +8,7 @@ ntp server 10.1.255.126
 ntp trusted-key 4294967282
 
 enable password passwd level 15
-username admin password passwd encrypted
+username admin password passwd
 
 aaa authentication ssh console LOCAL
 aaa authentication tel console LOCAL
