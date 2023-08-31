@@ -64,16 +64,19 @@ spanning-tree mode rapid-pvst
 interface GigabitEthernet0/0
 description INTERNET
 ip address 172.1.0.2 255.255.255.252
+no sh
 exit
 
 interface GigabitEthernet0/1
 description MAIN_ASA_01
 ip address 10.0.1.1 255.255.255.252
+no sh
 exit
 
 interface GigabitEthernet0/1/0
 description MAIN_BORDER_02
 ip addres 10.0.0.1 255.255.255.252
+no sh
 exit
 
 router ospf 65528
