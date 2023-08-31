@@ -42,8 +42,6 @@ network 10.0.1.0 255.255.255.252 area 1
 network 10.0.1.4 255.255.255.252 area 1
 neighbor 10.0.1.6
 neighbor 10.0.1.1
-area 1 nssa
-!!!!!!!!!!!!!!!!!!!!!!!area 1 stub
 exit
 
 policy-map global_policy
