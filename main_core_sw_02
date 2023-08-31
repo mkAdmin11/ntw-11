@@ -2,19 +2,15 @@
 en
 conf t
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ВРЕМЯ
 clock timezone MSK 3
 ntp server 10.1.255.126
 ntp trusted-key 4294967282
 !ntp update-calendar
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ТРАНСЛЯЦИЯ DNS
 no ip domain-lookup
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! СЕРВИС ШИФРОВАНИЯ
 service password-encryption
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ААА
 aaa new-model
 
 username admin privilege 15 secret passwd
@@ -24,7 +20,6 @@ tacacs-server host 10.1.255.126 key tacasc_server_pass
 aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ local enable
 
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! SSH
 ip ssh version 2
 ip ssh time-out 60
 ip ssh authentication-retries 3
@@ -82,7 +77,6 @@ ip dhcp snooping
 ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
 ip dhcp snooping information option allow-untrusted
 !ip dhcp relay information trust-all
-!no ip dhcp snooping information option
 
 interface Vlan100
 description MGMT
