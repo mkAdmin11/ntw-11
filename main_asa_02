@@ -46,11 +46,10 @@ no sh
 exit
 
 router ospf 65528
-router-id 4.4.4.4
+router-id 1.2.2.0
+area 1 nssa no-summary
 network 10.0.2.0 255.255.255.252 area 1
 network 10.0.2.4 255.255.255.252 area 1
-neighbor 10.0.2.6
-neighbor 10.0.2.1
 redistribute connected metric 1 subnets
 exit
 
