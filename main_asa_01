@@ -37,11 +37,10 @@ no sh
 exit
 
 router ospf 65528
-router-id 3.3.3.3
+router-id 1.2.1.0
+area 1 nssa no-summary
 network 10.0.1.0 255.255.255.252 area 1
 network 10.0.1.4 255.255.255.252 area 1
-neighbor 10.0.1.6
-neighbor 10.0.1.1
 exit
 
 policy-map global_policy
