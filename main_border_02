@@ -81,12 +81,12 @@ ip addres 10.0.0.2 255.255.255.252
 no sh
 exit
 
+
 router ospf 65528
-router-id 2.2.2.2
-network 10.0.2.0 0.0.0.3 area 1
+router-id 1.1.2.0
+area 1 nssa no-summary
+network 10.0.0.0 0.0.0.3 area 1
 network 10.0.0.0 0.0.0.3 area 0
-neighbor 10.0.2.2
-neighbor 10.0.0.1
 exit
 
 exit
