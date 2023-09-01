@@ -85,7 +85,7 @@ exit
 router ospf 65528
 router-id 1.1.2.0
 area 1 nssa no-summary
-network 10.0.0.0 0.0.0.3 area 1
+network 10.0.2.0 0.0.0.3 area 1
 network 10.0.0.0 0.0.0.3 area 0
 exit
 
