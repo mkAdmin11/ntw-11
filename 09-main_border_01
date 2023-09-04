@@ -63,19 +63,19 @@ spanning-tree mode rapid-pvst
 interface GigabitEthernet0/0
 description INTERNET
 ip address 172.1.0.2 255.255.255.252
-no sh
+no shutdown 
 exit
 
 interface GigabitEthernet0/1
 description MAIN_ASA_01
 ip address 10.0.1.1 255.255.255.252
-no sh
+no shutdown 
 exit
 
 interface GigabitEthernet0/1/0
 description MAIN_BORDER_02
 ip addres 10.0.0.1 255.255.255.252
-no sh
+no shutdown 
 exit
 
 interface Loopback0
@@ -83,14 +83,22 @@ description MGMT
 ip address 10.0.255.1 255.255.255.255
 exit
 
+interface Tunnel31
+ip address 10.0.1.129 255.255.255.252
+tunnel source GigabitEthernet0/0
+tunnel destination 172.3.0.2
+exit
+
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
 
 router ospf 65528
 router-id 1.1.1.0
 area 1 nssa no-summary
-network 10.0.1.0 0.0.0.3 area 1
+area 2 nssa no-summary
 network 10.0.0.0 0.0.0.3 area 0
+network 10.0.1.0 0.0.0.3 area 1
 network 10.0.255.1 0.0.0.0 area 1
+network 10.0.1.128 0.0.0.3 area 2
 default-information originate
 exit
 
