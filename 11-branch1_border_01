@@ -82,6 +82,7 @@ interface GigabitEthernet0/1.201
 description USERS
 encapsulation dot1Q 201
 ip address 10.2.2.1 255.255.255.128
+ip helper-address 10.1.255.126
 no shutdown 
 exit
 
@@ -89,6 +90,7 @@ interface GigabitEthernet0/1.301
 description WLAN
 encapsulation dot1Q 301
 ip address 10.2.3.1 255.255.255.128
+ip helper-address 10.1.255.126
 no shutdown 
 exit
 
@@ -96,6 +98,7 @@ interface GigabitEthernet0/1.401
 description VOIP
 encapsulation dot1Q 401
 ip address 10.2.4.1 255.255.255.192
+ip helper-address 10.1.255.126
 no shutdown 
 exit
 
@@ -103,12 +106,30 @@ interface GigabitEthernet0/1.501
 description PRINT
 encapsulation dot1Q 501
 ip address 10.2.5.1 255.255.255.192
+ip helper-address 10.1.255.126
+no shutdown 
+exit
+
+interface Tunnel31
+ip address 10.0.1.130 255.255.255.252
+tunnel source GigabitEthernet0/0
+tunnel destination 172.1.0.2
+exit
+
+interface Tunnel32
+ip address 10.0.2.130 255.255.255.252
+tunnel source GigabitEthernet0/0
+tunnel destination 172.2.0.2
+exit
 
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
 
 router ospf 65528
 router-id 0.2.1.1
 area 2 nssa no-summary
+network 10.0.1.128 0.0.0.3 area 2
+network 10.0.2.128 0.0.0.3 area 2
+redistribute connected subnets
 exit
 
 router bgp 65200
