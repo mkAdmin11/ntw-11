@@ -25,7 +25,7 @@ nameif OUTSIDE
 !!!!!!!!!!!!!!!!!!!!!!!! security-level 0
 security-level 100
 ip address 10.0.2.2 255.255.255.252
-no sh
+no shutdown
 exit
 
 interface GigabitEthernet1/2
@@ -33,7 +33,7 @@ description MAIN_CORE_SW_01
 nameif INSIDE
 security-level 100
 ip address 10.0.2.5 255.255.255.252
-no sh
+no shutdown
 exit
 
 interface GigabitEthernet1/3
@@ -42,7 +42,7 @@ nameif DMZ
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!! security-level 50
 security-level 100
 ip address 10.0.100.1 255.255.255.192
-no sh
+no shutdown
 exit
 
 router ospf 65528
