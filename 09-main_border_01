@@ -25,10 +25,8 @@ username admin privilege 15 secret passwd
 enable secret level 15 5 passwd
 tacacs-server host 10.1.255.126 key tacasc_server_pass
 
-aaa authentication login default local
-aaa authentication enable default local enable
-!!!!!!!!!!!!!!!!!!!!!!!!!!! aaa authentication login default group tacacs+ local
-!!!!!!!!!!!!!!!!!!!!!!!!!!! aaa authentication enable default group tacacs+ local enable
+aaa authentication login default group tacacs+ local
+aaa authentication enable default group tacacs+ local enable
 
 ip ssh version 2
 ip ssh time-out 60
@@ -80,11 +78,20 @@ ip addres 10.0.0.1 255.255.255.252
 no sh
 exit
 
+interface Loopback0
+description MGMT
+ip address 10.0.255.1 255.255.255.255
+exit
+
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
+
 router ospf 65528
 router-id 1.1.1.0
 area 1 nssa no-summary
 network 10.0.1.0 0.0.0.3 area 1
 network 10.0.0.0 0.0.0.3 area 0
+network 10.0.255.1 0.0.0.0 area 1
+default-information originate
 exit
 
 exit
