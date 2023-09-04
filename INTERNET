@@ -1,0 +1,48 @@
+
+
+en
+conf t
+
+interface GigabitEthernet1/0/1
+no switchport
+ip address 172.1.0.1 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet1/0/2
+no switchport
+ip address 172.2.0.1 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet1/0/3
+no switchport
+ip address 172.3.0.1 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet1/0/4
+no switchport
+ip address 8.8.8.1 255.255.255.0
+no shutdown
+exit
+
+ip routing
+
+router bgp 65100
+bgp router-id 8.8.8.8
+neighbor 172.1.0.2 remote-as 65200
+neighbor 172.2.0.2 remote-as 65200
+neighbor 172.3.0.2 remote-as 65200
+network 172.1.0.0 mask 255.255.255.252
+network 172.2.0.0 mask 255.255.255.252
+network 172.3.0.0 mask 255.255.255.252
+network 8.8.8.0 mask 255.255.255.0
+exit
+
+exit
+
+wr
+
+exit
+
