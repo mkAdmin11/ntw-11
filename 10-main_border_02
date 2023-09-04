@@ -94,6 +94,11 @@ network 10.0.255.2 0.0.0.0 area 1
 default-information originate
 exit
 
+router bgp 65200
+bgp router-id 1.1.2.0
+neighbor 172.2.0.1 remote-as 65100
+exit
+
 exit
 
 copy running-config startup-config 
