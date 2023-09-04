@@ -1,0 +1,123 @@
+
+en
+
+vlan database
+vlan 101 name MGMT
+vlan 201 name USERS
+vlan 301 name WLAN
+vlan 401 name VOIP
+vlan 501 name PRINT
+exit
+
+conf t
+
+clock timezone MSK 3
+ntp server 10.1.255.126
+ntp trusted-key 4294967282
+
+no ip domain-lookup
+
+service password-encryption
+
+aaa new-model
+
+username admin privilege 15 secret passwd
+enable secret level 15 5 passwd
+tacacs-server host 10.1.255.126 key tacasc_server_pass
+
+aaa authentication login default group tacacs+ local
+aaa authentication enable default group tacacs+ local enable
+
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+ip domain-name my.local
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+permit tcp 10.1.255.0 0.0.0.127 any
+deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line aux 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication default
+transport input ssh
+privilege level 15
+exit
+
+spanning-tree mode rapid-pvst
+
+interface GigabitEthernet0/0
+description INTERNET
+ip address 172.3.0.2 255.255.255.252
+no shutdown
+exit
+
+interface GigabitEthernet0/1
+no shutdown
+exit
+
+interface GigabitEthernet0/1.101
+description MGMT
+encapsulation dot1Q 101
+ip address 10.2.255.1 255.255.255.192
+ip helper-address 10.1.255.126
+no shutdown 
+exit
+
+interface GigabitEthernet0/1.201
+description USERS
+encapsulation dot1Q 201
+ip address 10.2.2.1 255.255.255.128
+no shutdown 
+exit
+
+interface GigabitEthernet0/1.301
+description WLAN
+encapsulation dot1Q 301
+ip address 10.2.3.1 255.255.255.128
+no shutdown 
+exit
+
+interface GigabitEthernet0/1.401
+description VOIP
+encapsulation dot1Q 401
+ip address 10.2.4.1 255.255.255.192
+no shutdown 
+exit
+
+interface GigabitEthernet0/1.501
+description PRINT
+encapsulation dot1Q 501
+ip address 10.2.5.1 255.255.255.192
+
+ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
+
+router ospf 65528
+router-id 0.2.1.1
+area 2 nssa no-summary
+exit
+
+router bgp 65200
+bgp router-id 0.2.1.1
+neighbor 172.3.0.1 remote-as 65100
+exit
+
+exit
+
+copy running-config startup-config 
+
+exit
