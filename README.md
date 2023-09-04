@@ -1,4 +1,4 @@
 # crpnt-final
 Диплом - Сетевой инженер
 
-![] sources/план.png
+![]sources/план.png
