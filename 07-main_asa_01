@@ -22,8 +22,8 @@ access-list SSH_ACL permit tcp 10.1.255.0 255.255.255.128 any
 interface GigabitEthernet1/1
 description MAIN_BORDER_01
 nameif OUTSIDE
-security-level 100
 !!!!!!!!!!!!!!!!!!!!!!! security-level 0
+security-level 100
 ip address 10.0.1.2 255.255.255.252
 no sh
 exit
