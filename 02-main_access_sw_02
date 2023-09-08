@@ -3,7 +3,7 @@ en
 conf t
 
 clock timezone MSK 3
-ntp server 10.1.255.126
+ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
 no ip domain-lookup
@@ -14,7 +14,7 @@ aaa new-model
 
 username admin privilege 15 secret passwd
 enable secret level 15 5 passwd
-tacacs-server host 10.1.255.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ local enable
@@ -28,7 +28,7 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 10.1.255.0 0.0.0.127 any
+permit tcp 172.17.1.0 0.0.0.127 any
 deny ip any any
 exit
 
@@ -80,7 +80,7 @@ ip dhcp snooping information option allow-untrusted
 
 interface Vlan100
 description MGMT
-ip address 10.1.255.5 255.255.255.128
+ip address 172.17.1.12 255.255.255.128
 exit
 
 interface GigabitEthernet0/1
