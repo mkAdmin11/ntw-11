@@ -70,7 +70,7 @@ name PRINT
 exit
 
 spanning-tree mode rapid-pvst
-spanning-tree vlan 1,100,200,300,400,500,1002-1005 root primary
+spanning-tree vlan 1,100,200,300,400,500,1002-1005 root secondary
 
 ip dhcp snooping
 ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
