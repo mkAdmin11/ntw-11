@@ -3,7 +3,7 @@ en
 conf t
 
 clock timezone MSK 3
-ntp server 10.1.255.126
+ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
 no ip domain-lookup
@@ -14,7 +14,7 @@ aaa new-model
 
 username admin privilege 15 secret passwd
 enable secret level 15 5 passwd
-tacacs-server host 10.1.255.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ local enable
@@ -28,7 +28,7 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 10.1.255.0 0.0.0.127 any
+permit tcp 172.17.1.0 0.0.0.127 any
 deny ip any any
 exit
 
@@ -70,7 +70,7 @@ name PRINT
 exit
 
 spanning-tree mode rapid-pvst
-spanning-tree vlan 1,100,200,300,400,500,1002-1005 root secondary
+spanning-tree vlan 1,100,200,300,400,500,1002-1005 root primary
 
 ip dhcp snooping
 ip dhcp snooping vlan 1,100,200,300,400,500,1002-1005
@@ -80,9 +80,10 @@ ip dhcp snooping information option allow-untrusted
 interface Vlan100
 description MGMT
 ip access-group MGMT_ACL out
-ip address 10.1.255.2 255.255.255.128
+ip address 172.17.1.2 255.255.255.128
+ip helper-address 172.17.1.126
 standby version 2
-standby 1 ip 10.1.255.3
+standby 1 172.17.1.3
 standby 1 priority 99
 standby 1 preempt
 standby preempt
@@ -91,10 +92,10 @@ exit
 interface Vlan200
 description USERS
 ip access-group USERS_ACL out
-ip address 10.1.2.2 255.255.255.0
-ip helper-address 10.1.255.126
+ip address 172.17.2.2 255.255.255.0
+ip helper-address 172.17.1.126
 standby version 2
-standby 2 ip 10.1.2.3
+standby 2 ip 172.17.2.3
 standby 2 priority 99
 standby 2 preempt
 standby preempt
@@ -103,10 +104,10 @@ exit
 interface Vlan300
 description WLAN
 ip access-group WLAN_ACL out
-ip address 10.1.3.2 255.255.255.0
-ip helper-address 10.1.255.126
+ip address 172.17.3.2 255.255.255.0
+ip helper-address 172.17.1.126
 standby version 2
-standby 3 ip 10.1.3.3
+standby 3 ip 172.17.3.3
 standby 3 priority 99
 standby 3 preempt
 standby preempt
@@ -115,10 +116,10 @@ exit
 interface Vlan400
 description VOIP
 ip access-group VOIP_ACL out
-ip address 10.1.4.2 255.255.255.0
-ip helper-address 10.1.255.126
+ip address 172.17.4.2 255.255.255.0
+ip helper-address 172.17.1.126
 standby version 2
-standby 4 ip 10.1.4.3
+standby 4 ip 172.17.4.3
 standby 4 priority 99
 standby 4 preempt
 standby preempt
@@ -127,10 +128,10 @@ exit
 interface Vlan500
 description PRINT
 ip access-group PRINT_ACL out
-ip address 10.1.5.2 255.255.255.0
-ip helper-address 10.1.255.126
+ip address 172.17.5.2 255.255.255.0
+ip helper-address 172.17.1.126
 standby version 2
-standby 5 ip 10.1.5.3
+standby 5 ip 172.17.5.3
 standby 5 priority 99
 standby 5 preempt
 standby preempt
@@ -159,13 +160,13 @@ exit
 
 interface range fastEthernet 0/23-24
 description PORT-CHANNEL1
-channel-group 1 mode passive
+channel-group 1 mode active
 ip dhcp snooping trust
 no shutdown
 exit
 
 interface Port-channel1
-description RESERVE_MAIN_CORE_SW_01
+description RESERVE_MAIN_CORE_SW_02
 switchport trunk encapsulation dot1q
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
@@ -174,7 +175,7 @@ exit
 interface GigabitEthernet0/1
 description UPLINK_MAIN_ASA_02
 no switchport
-ip address 10.0.2.6 255.255.255.252
+ip address 172.16.1.18 255.255.255.252
 no shutdown
 exit
 
@@ -187,8 +188,8 @@ ip routing
 router ospf 65528
 router-id 0.1.3.2
 area 1 nssa no-summary
-redistribute connected metric 20 subnets
-network 10.0.2.4 0.0.0.3 area 1
+network 172.16.1.16 0.0.0.3 area 1
+redistribute connected subnets
 exit
 
 ip access-list extended MGMT_ACL
