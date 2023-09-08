@@ -106,10 +106,6 @@ switchport voice vlan 400
 switchport port-security
 switchport port-security mac-address sticky 
 switchport port-security maximum 4
-switchport port-security mac-address sticky 0001.C9E9.3776
-switchport port-security mac-address sticky 0005.5E2D.0001
-switchport port-security mac-address sticky 0005.5E2D.0002
-switchport port-security mac-address sticky 00D0.9766.5201
 switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast
