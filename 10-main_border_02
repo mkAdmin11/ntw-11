@@ -12,7 +12,7 @@ exit
 conf t
 
 clock timezone MSK 3
-ntp server 10.1.255.126
+ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
 no ip domain-lookup
@@ -23,10 +23,12 @@ aaa new-model
 
 username admin privilege 15 secret passwd
 enable secret level 15 5 passwd
-tacacs-server host 10.1.255.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key tacasc_server_pass
 
-aaa authentication login default group tacacs+ local
-aaa authentication enable default group tacacs+ local enable
+aaa authentication login default local
+aaa authentication enable default glocal enable
+! aaa authentication login default group tacacs+ local
+! aaa authentication enable default group tacacs+ local enable
 
 ip ssh version 2
 ip ssh time-out 60
@@ -37,7 +39,7 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 10.1.255.0 0.0.0.127 any
+permit tcp 172.17.1.0 0.0.0.127 any
 deny ip any any
 exit
 
@@ -68,23 +70,23 @@ exit
 
 interface GigabitEthernet0/1
 description MAIN_ASA_02
-ip address 10.0.2.1 255.255.255.252
+ip address 172.16.1.9 255.255.255.252
 no sh
 exit
 
 interface GigabitEthernet0/1/0
 description MAIN_BORDER_01
-ip addres 10.0.0.2 255.255.255.252
+ip addres 172.16.1.2 255.255.255.252
 no sh
 exit
 
 interface Loopback0
 description MGMT
-ip address 10.0.255.2 255.255.255.255
+ip address 172.16.255.2 255.255.255.255
 exit
 
 interface Tunnel32
-ip address 10.0.2.129 255.255.255.252
+ip address 172.16.2.5 255.255.255.252
 tunnel source GigabitEthernet0/0
 tunnel destination 172.3.0.2
 exit
@@ -92,18 +94,17 @@ exit
 ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
 
 router ospf 65528
-router-id 1.1.2.0
+router-id 0.1.1.2
 area 1 nssa no-summary
-area 2 nssa no-summary
-network 10.0.0.0 0.0.0.3 area 0
-network 10.0.2.0 0.0.0.3 area 1
-network 10.0.255.2 0.0.0.0 area 1
-network 10.0.2.128 0.0.0.3 area 2
-default-information originate
+network 172.16.1.0 0.0.0.3 area 0
+network 172.16.1.8 0.0.0.3 area 1
+network 172.16.255.2 0.0.0.0 area 1
+network 172.16.2.4 0.0.0.3 area 2
+passive-interface loopback 0
 exit
 
 router bgp 65200
-bgp router-id 1.1.2.0
+bgp router-id 0.1.1.2
 neighbor 172.2.0.1 remote-as 65100
 exit
 
