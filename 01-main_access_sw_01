@@ -80,7 +80,7 @@ ip dhcp snooping information option allow-untrusted
 
 interface Vlan100
 description MGMT
-ip address 172.17.1.11 255.255.255.128
+ip address 172.17.1.21 255.255.255.128
 exit
 
 interface GigabitEthernet0/1
