@@ -128,7 +128,7 @@ exit
 interface Vlan500
 description PRINT
 ip access-group PRINT_ACL out
-ip address 172.17.5.2 255.255.255.0
+ip address 172.17.5.2 255.255.255.128
 ip helper-address 172.17.1.126
 standby version 2
 standby 5 ip 172.17.5.3
