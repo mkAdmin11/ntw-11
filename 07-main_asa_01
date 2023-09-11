@@ -24,7 +24,7 @@ description MAIN_BORDER_01
 nameif OUTSIDE
 !!!!!!!!!!!!!!!!!!!!!!! security-level 0
 security-level 100
-ip address 172.17.1.6 255.255.255.252
+ip address 172.16.1.6 255.255.255.252
 no sh
 exit
 
