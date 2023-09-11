@@ -41,7 +41,7 @@ description MAIN_WEB_SERVER_01
 nameif DMZ
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!! security-level 50
 security-level 100
-ip address 172.17.100.1 255.255.255.192
+ip address 172.16.100.1 255.255.255.192
 no shutdown
 exit
 
