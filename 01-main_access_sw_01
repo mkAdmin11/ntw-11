@@ -14,7 +14,7 @@ aaa new-model
 
 username admin privilege 15 secret passwd
 enable secret level 15 5 passwd
-tacacs-server host 172.16.1.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
 aaa authentication enable default group tacacs+ local enable
