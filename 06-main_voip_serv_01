@@ -82,6 +82,8 @@ max-dn 2
 ip source-address 172.17.4.254 port 2222
 exit
 
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.100
+
 ephone-dn 1
 
 number 1001
