@@ -40,7 +40,7 @@ crypto key generate rsa
 
 ip access-list extended SSH_ACL
 remark ADMIN_IN_MGMT_NETWORK
-1permit tcp 172.17.1.0 0.0.0.127 any
+1 permit tcp 172.17.1.0 0.0.0.127 any
 remark DENY_ANY
 10 deny ip any any
 exit
