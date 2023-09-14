@@ -15,14 +15,16 @@ clock timezone MSK 3
 ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
-no ip domain-lookup
+ip name-server 172.17.1.126
+! no ip domain-lookup
 
 service password-encryption
 
 aaa new-model
 
 username admin privilege 15 secret passwd
-enable secret level 15 5 passwd
+enable secret passwd
+
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
@@ -37,9 +39,11 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 172.16.2.0 0.0.0.3 any
-permit tcp 172.16.2.4 0.0.0.3 any
-deny ip any any
+remark ADMIN_IN_MGMT_NETWORK
+1 permit tcp 172.16.2.0 0.0.0.3 any
+2 permit tcp 172.16.2.4 0.0.0.3 any
+remark DENY_ANY
+10 deny ip any any
 exit
 
 line con 0
@@ -64,6 +68,7 @@ spanning-tree mode rapid-pvst
 interface GigabitEthernet0/0
 description INTERNET
 ip address 172.3.0.2 255.255.255.252
+ip nat outside
 no shutdown
 exit
 
@@ -83,7 +88,8 @@ description USERS
 encapsulation dot1Q 201
 ip address 172.18.2.1 255.255.255.128
 ip helper-address 172.17.1.126
-no shutdown 
+ip nat inside
+no shutdown
 exit
 
 interface GigabitEthernet0/1.301
@@ -91,6 +97,7 @@ description WLAN
 encapsulation dot1Q 301
 ip address 172.18.3.1 255.255.255.128
 ip helper-address 172.17.1.126
+ip nat inside
 no shutdown 
 exit
 
@@ -122,8 +129,6 @@ tunnel source GigabitEthernet0/0
 tunnel destination 172.2.0.2
 exit
 
-ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
-
 router ospf 65528
 router-id 0.2.1.1
 network 172.16.2.0 0.0.0.3 area 2
@@ -136,6 +141,19 @@ router bgp 65200
 bgp router-id 0.2.1.1
 neighbor 172.3.0.1 remote-as 65100
 exit
+
+ip access-list extended NAT
+remark PRIVATE_NETWORK
+1 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
+remark USERS_TO_INTERNET
+2 permit ip 172.18.2.0 0.0.0.255 any
+remark WIFI_TO_INTERNET
+3 permit ip 172.18.3.0 0.0.0.255 any
+remark DENY_ANY
+10 deny ip any any
+exit
+
+ip nat inside source list NAT interface GigabitEthernet0/0 overload
 
 exit
 
