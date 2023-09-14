@@ -15,14 +15,16 @@ clock timezone MSK 3
 ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
-no ip domain-lookup
+ip name-server 172.17.1.126
+! no ip domain-lookup
 
 service password-encryption
 
 aaa new-model
 
 username admin privilege 15 secret passwd
-enable secret level 15 5 passwd
+enable secret passwd
+
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
@@ -37,8 +39,10 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 172.17.1.0 0.0.0.127 any
-deny ip any any
+remark ADMIN_IN_MGMT_NETWORK
+1permit tcp 172.17.1.0 0.0.0.127 any
+remark DENY_ANY
+10 deny ip any any
 exit
 
 line con 0
@@ -63,19 +67,22 @@ spanning-tree mode rapid-pvst
 interface GigabitEthernet0/0
 description INTERNET
 ip address 172.2.0.2 255.255.255.252
-no sh
+ip nat outside
+no shutdown
 exit
 
 interface GigabitEthernet0/1
 description MAIN_ASA_02
 ip address 172.16.1.9 255.255.255.252
-no sh
+ip nat inside
+no shutdown
 exit
 
 interface GigabitEthernet0/1/0
 description MAIN_BORDER_01
 ip addres 172.16.1.2 255.255.255.252
-no sh
+ip nat inside
+no shutdown
 exit
 
 interface Loopback0
@@ -89,11 +96,10 @@ tunnel source GigabitEthernet0/0
 tunnel destination 172.3.0.2
 exit
 
-ip route 0.0.0.0 0.0.0.0 GigabitEthernet0/0
-
 router ospf 65528
 router-id 0.1.1.2
 area 1 nssa no-summary
+auto-cost reference-bandwidth 1000
 network 172.16.1.0 0.0.0.3 area 0
 network 172.16.1.8 0.0.0.3 area 1
 network 172.16.255.2 0.0.0.0 area 1
@@ -105,6 +111,21 @@ router bgp 65200
 bgp router-id 0.1.1.2
 neighbor 172.2.0.1 remote-as 65100
 exit
+
+ip access-list extended NAT
+remark USERS_TO_INTERNET
+1 permit ip 172.17.2.0 0.0.0.255 any
+remark WIFI_TO_INTERNET
+2 permit ip 172.17.3.0 0.0.0.255 any
+remark PRIV_DNS_TO_PUBLIC_DNS
+3 permit ip host 172.17.1.126 host 8.8.8.8
+remark DENY_ANY
+deny ip any any
+
+ip nat inside source list NAT interface GigabitEthernet0/0 overload
+
+ip nat inside source static tcp 172.16.100.2 80 172.2.0.2 80
+ip nat inside source static tcp 172.16.100.2 443 172.2.0.2 443
 
 exit
 
