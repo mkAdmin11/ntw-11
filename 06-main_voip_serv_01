@@ -15,14 +15,16 @@ clock timezone MSK 3
 ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
-no ip domain-lookup
+ip name-server 172.17.1.126
+! no ip domain-lookup
 
 service password-encryption
 
 aaa new-model
 
 username admin privilege 15 secret passwd
-enable secret level 15 5 passwd
+enable secret passwd
+
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
@@ -37,8 +39,10 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp 172.17.1.0 0.0.0.127 any
-deny ip any any
+remark ADMIN_IN_MGMT_NETWORK
+1 permit tcp 172.17.1.0 0.0.0.127 any
+remark DENY_ANY
+10 deny ip any any
 exit
 
 line con 0
@@ -61,7 +65,7 @@ exit
 spanning-tree mode rapid-pvst
 
 interface FastEthernet0/0
-no sh
+no shutdown 
 exit
 
 interface FastEthernet0/0.100
@@ -76,13 +80,13 @@ encapsulation dot1Q 400
 ip address 172.17.4.254 255.255.255.0
 exit
 
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.100
+
 telephony-service 
 max-ephones 2
 max-dn 2
 ip source-address 172.17.4.254 port 2222
 exit
-
-ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.100
 
 ephone-dn 1
 
