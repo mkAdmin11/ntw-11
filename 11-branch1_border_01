@@ -69,6 +69,8 @@ interface GigabitEthernet0/0
 description INTERNET
 ip address 172.3.0.2 255.255.255.252
 ip nat outside
+ip access-group INTERNET_IN in
+ip access-group INTERNET_OUT out
 no shutdown
 exit
 
@@ -160,6 +162,14 @@ remark DENY_ANY
 exit
 
 ip nat inside source list NAT interface GigabitEthernet0/0 overload
+
+ip access-list extended INTERNET_OUT
+1 permit ip host 172.3.0.2 any
+10 deny ip any any
+
+ip access-list extended INTERNET_IN
+1 permit ip any host 172.3.0.2
+10 deny ip any any
 
 exit
 
