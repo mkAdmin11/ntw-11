@@ -113,14 +113,17 @@ neighbor 172.1.0.1 remote-as 65100
 exit
 
 ip access-list extended NAT
+remark PRIVATE_NETWORK
+1 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
 remark USERS_TO_INTERNET
-1 permit ip 172.17.2.0 0.0.0.255 any
+2 permit ip 172.17.2.0 0.0.0.255 any
 remark WIFI_TO_INTERNET
-2 permit ip 172.17.3.0 0.0.0.255 any
+3 permit ip 172.17.3.0 0.0.0.255 any
 remark PRIV_DNS_TO_PUBLIC_DNS
-3 permit ip host 172.17.1.126 host 8.8.8.8
+4 permit ip host 172.17.1.126 host 8.8.8.8
 remark DENY_ANY
-deny ip any any
+10 deny ip any any
+exit
 
 ip nat inside source list NAT interface GigabitEthernet0/0 overload
 
