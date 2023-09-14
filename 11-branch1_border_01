@@ -146,9 +146,9 @@ ip access-list extended NAT
 remark PRIVATE_NETWORK
 1 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
 remark USERS_TO_INTERNET
-2 permit ip 172.18.2.0 0.0.0.255 any
+2 permit ip 172.18.2.0 0.0.0.127 any
 remark WIFI_TO_INTERNET
-3 permit ip 172.18.3.0 0.0.0.255 any
+3 permit ip 172.18.3.0 0.0.0.127 any
 remark DENY_ANY
 10 deny ip any any
 exit
