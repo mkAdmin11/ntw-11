@@ -6,14 +6,16 @@ clock timezone MSK 3
 ntp server 172.17.1.126
 ntp trusted-key 4294967282
 
-no ip domain-lookup
+ip name-server 172.17.1.126
+! no ip domain-lookup
 
 service password-encryption
 
 aaa new-model
 
 username admin privilege 15 secret passwd
-enable secret level 15 5 passwd
+enable secret passwd
+
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
@@ -28,8 +30,10 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-permit tcp host 172.18.1.1 any
-deny ip any any
+remark ADMIN_IN_MGMT_NETWORK
+1 permit tcp 172.17.1.0 0.0.0.127 any
+remark DENY_ANY
+10 deny ip any any
 exit
 
 line con 0
@@ -90,10 +94,11 @@ description UPLINK_branch1_border_01
 switchport mode trunk
 switchport trunk allowed vlan 101,201,301,401,501
 ip dhcp snooping trust
+no shutdown 
 exit
 
 interface GigabitEthernet0/2
-sh
+shutdown 
 exit
 
 interface FastEthernet0/1
