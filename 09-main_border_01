@@ -23,7 +23,8 @@ service password-encryption
 aaa new-model
 
 username admin privilege 15 secret passwd
-enable secret level 15 5 passwd
+enable secret passwd
+
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
 aaa authentication login default group tacacs+ local
@@ -38,7 +39,9 @@ crypto key generate rsa
 1024
 
 ip access-list extended SSH_ACL
-1 permit tcp 172.17.1.0 0.0.0.127 any
+remark ADMIN_IN_MGMT_NETWORK
+1permit tcp 172.17.1.0 0.0.0.127 any
+remark DENY_ANY
 10 deny ip any any
 exit
 
@@ -64,18 +67,21 @@ spanning-tree mode rapid-pvst
 interface GigabitEthernet0/0
 description INTERNET
 ip address 172.1.0.2 255.255.255.252
+ip nat outside
 no shutdown 
 exit
 
 interface GigabitEthernet0/1
 description MAIN_ASA_01
 ip address 172.16.1.5 255.255.255.252
+ip nat inside
 no shutdown 
 exit
 
 interface GigabitEthernet0/1/0
 description MAIN_BORDER_02
 ip addres 172.16.1.1 255.255.255.252
+ip nat inside
 no shutdown 
 exit
 
@@ -107,12 +113,13 @@ neighbor 172.1.0.1 remote-as 65100
 exit
 
 ip access-list extended NAT
-remark USER_ACCESS_TO_THE_INTERNET
-permit ip 172.17.2.0 0.0.0.255 any
-remark WIFI_ACCESS_TO_THE_INTERNET
-permit ip 172.17.3.0 0.0.0.255 any
-remark PRIV_DNS_ACCESS_TO_THE_PUBLIC_DNS
-permit ip host 172.17.1.126 host 8.8.8.8
+remark USERS_TO_INTERNET
+1 permit ip 172.17.2.0 0.0.0.255 any
+remark WIFI_TO_INTERNET
+2 permit ip 172.17.3.0 0.0.0.255 any
+remark PRIV_DNS_TO_PUBLIC_DNS
+3 permit ip host 172.17.1.126 host 8.8.8.8
+remark DENY_ANY
 deny ip any any
 
 ip nat inside source list NAT interface GigabitEthernet0/0 overload
