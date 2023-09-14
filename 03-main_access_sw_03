@@ -83,6 +83,8 @@ description MGMT
 ip address 172.17.1.13 255.255.255.128
 exit
 
+ip default-gateway 172.17.1.1
+
 interface GigabitEthernet0/1
 description UPLINK_MAIN_CORE_SW_01
 switchport mode trunk
