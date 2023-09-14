@@ -136,6 +136,11 @@ network 172.16.2.0 0.0.0.3 area 2
 network 172.16.2.4 0.0.0.3 area 2
 network 172.18.0.0 0.0.255.255 area 2
 passive-interface gigabitEthernet 0/1
+passive-interface gigabitEthernet 0/1.101
+passive-interface gigabitEthernet 0/1.201
+passive-interface gigabitEthernet 0/1.301
+passive-interface gigabitEthernet 0/1.401
+passive-interface gigabitEthernet 0/1.501
 exit
 
 router bgp 65200
