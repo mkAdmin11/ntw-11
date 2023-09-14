@@ -179,6 +179,7 @@ interface GigabitEthernet0/1
 description UPLINK_MAIN_ASA_01
 no switchport
 ip address 172.16.1.14 255.255.255.252
+ip ospf cost 1
 no shutdown
 exit
 
