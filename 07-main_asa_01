@@ -1,7 +1,4 @@
 
-en
-
-
 conf t
 
 hostname main_asa_01
