@@ -101,7 +101,7 @@ interface GigabitEthernet0/2
 description RESERV_UPLINK_MAIN_CORE_SW_02
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
-spanning-tree vlan 1,100,200,300,400,500,1002-1005 cost 25
+! spanning-tree vlan 1,100,200,300,400,500,1002-1005 cost 25
 exit
 
 interface FastEthernet0/1
