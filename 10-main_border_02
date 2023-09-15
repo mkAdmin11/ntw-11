@@ -81,7 +81,7 @@ interface GigabitEthernet0/1
 description MAIN_ASA_02
 ip address 172.16.1.9 255.255.255.252
 ip nat inside
-ip ospf cost 100
+ip ospf cost 5000
 no shutdown
 exit
 
@@ -89,7 +89,7 @@ interface GigabitEthernet0/1/0
 description MAIN_BORDER_01
 ip addres 172.16.1.2 255.255.255.252
 ip nat inside
-ip ospf cost 100
+ip ospf cost 5000
 no shutdown
 exit
 
