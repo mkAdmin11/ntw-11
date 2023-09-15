@@ -40,7 +40,7 @@ remark DENY_ANY
 exit
 
 line con 0
-login authentication default
+login authentication CON
 privilege level 15
 exit
 
