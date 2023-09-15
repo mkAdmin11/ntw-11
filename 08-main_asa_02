@@ -1,7 +1,7 @@
 
 conf t
 
-hostname main_asa_02
+hostname main-asa-02
 
 ntp server 172.17.1.126
 ntp trusted-key 4294967282
