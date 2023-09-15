@@ -24,7 +24,7 @@ nameif OUTSIDE
 security-level 100
 ! security-level 0
 ip address 172.16.1.6 255.255.255.252
-no sh
+no shutdown 
 exit
 
 interface GigabitEthernet1/2
@@ -32,7 +32,7 @@ description MAIN_CORE_SW_01
 nameif INSIDE
 security-level 100
 ip address 172.16.1.13 255.255.255.252
-no sh
+no shutdown 
 exit
 
 router ospf 65528
