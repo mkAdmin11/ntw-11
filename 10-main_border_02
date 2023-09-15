@@ -1,3 +1,4 @@
+no
 
 en
 
@@ -10,6 +11,8 @@ vlan 500 name PRINT
 exit
 
 conf t
+
+hostname main_border_02
 
 clock timezone MSK 3
 ntp server 172.17.1.126
