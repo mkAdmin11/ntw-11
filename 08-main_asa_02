@@ -1,7 +1,3 @@
-
-en
-
-
 conf t
 
 hostname main_asa_02
@@ -24,8 +20,8 @@ access-list SSH_ACL permit tcp 172.17.1.0 255.255.255.128 any
 interface GigabitEthernet1/1
 description MAIN_BORDER_01
 nameif OUTSIDE
-!!!!!!!!!!!!!!!!!!!!!!!! security-level 0
 security-level 100
+! security-level 0
 ip address 172.16.1.10 255.255.255.252
 no shutdown
 exit
@@ -41,8 +37,8 @@ exit
 interface GigabitEthernet1/3
 description MAIN_WEB_SERVER_01
 nameif DMZ
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!! security-level 50
 security-level 100
+! security-level 50
 ip address 172.16.100.1 255.255.255.192
 no shutdown
 exit
