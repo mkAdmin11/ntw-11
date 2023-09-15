@@ -1,5 +1,6 @@
 no
 
+
 en
 
 vlan database
@@ -136,7 +137,7 @@ exit
 
 router ospf 65528
 router-id 0.2.1.1
-auto-cost reference-bandwidth 1000
+! auto-cost reference-bandwidth 1000
 network 172.16.2.0 0.0.0.3 area 2
 network 172.16.2.4 0.0.0.3 area 2
 network 172.18.0.0 0.0.255.255 area 2
