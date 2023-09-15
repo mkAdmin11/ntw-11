@@ -1,5 +1,9 @@
+no
+
 en
 conf t
+
+hostname PROVIDER
 
 interface GigabitEthernet1/0/1
 no switchport
