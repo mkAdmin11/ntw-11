@@ -115,6 +115,7 @@ switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast
 spanning-tree bpduguard enable
+no shutdown
 exit
 
 interface FastEthernet0/2
@@ -124,6 +125,7 @@ switchport trunk allowed vlan 101,301
 switchport trunk native vlan 101
 spanning-tree portfast trunk
 spanning-tree bpduguard enable
+no shutdown
 exit
 
 interface range FastEthernet0/3-24
