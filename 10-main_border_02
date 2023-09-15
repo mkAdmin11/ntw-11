@@ -1,5 +1,6 @@
 no
 
+
 en
 
 vlan database
@@ -106,7 +107,7 @@ exit
 router ospf 65528
 router-id 0.1.1.2
 area 1 nssa no-summary
-auto-cost reference-bandwidth 1000
+! auto-cost reference-bandwidth 1000
 network 172.16.1.0 0.0.0.3 area 0
 network 172.16.1.8 0.0.0.3 area 1
 network 172.16.255.2 0.0.0.0 area 1
@@ -126,7 +127,7 @@ remark USERS_TO_INTERNET
 2 permit ip 172.17.2.0 0.0.0.255 any
 remark WIFI_TO_INTERNET
 3 permit ip 172.17.3.0 0.0.0.255 any
-remark PRIV_DNS_TO_PUBLIC_DNS
+remark DNS
 4 permit ip host 172.17.1.126 host 8.8.8.8
 remark DENY_ANY
 10 deny ip any any
