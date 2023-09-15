@@ -95,6 +95,7 @@ interface GigabitEthernet0/1
 description UPLINK_MAIN_CORE_SW_01
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
+no shutdown
 exit
 
 interface GigabitEthernet0/2
@@ -102,6 +103,7 @@ description RESERV_UPLINK_MAIN_CORE_SW_02
 switchport mode trunk
 switchport trunk allowed vlan 100,200,300,400,500
 ! spanning-tree vlan 1,100,200,300,400,500,1002-1005 cost 25
+no shutdown
 exit
 
 interface FastEthernet0/1
@@ -116,6 +118,7 @@ switchport port-security aging time 1440
 spanning-tree portfast
 spanning-tree bpduguard enable
 ip dhcp snooping trust
+no shutdown
 exit
 
 interface FastEthernet0/2
@@ -129,6 +132,7 @@ switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast
 spanning-tree bpduguard enable
+no shutdown
 exit
 
 interface FastEthernet0/3
@@ -142,6 +146,7 @@ switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast trunk
 spanning-tree bpduguard enable
+no shutdown
 exit
 
 interface range FastEthernet0/4-24
