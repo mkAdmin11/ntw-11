@@ -102,13 +102,13 @@ number 1002
 exit
 
 ephone 1
-mac-address 0003.E472.5156
+mac-address 000D.BDAB.206B
 button 1:1
 type 7960
 exit
 
 ephone 2
-mac-address 000C.CFEA.42EE
+mac-address 0060.47DC.B56D
 button 1:2
 type 7960
 exit
