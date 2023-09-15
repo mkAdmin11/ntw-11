@@ -145,6 +145,7 @@ ip access-list extended INTERNET_OUT
 ip access-list extended INTERNET_IN
 1 permit ip any host 172.2.0.2
 10 deny ip any any
+exit
 
 exit
 
