@@ -175,10 +175,12 @@ ip nat inside source list NAT interface GigabitEthernet0/0 overload
 ip access-list extended INTERNET_OUT
 1 permit ip host 172.3.0.2 any
 10 deny ip any any
+exit
 
 ip access-list extended INTERNET_IN
 1 permit ip any host 172.3.0.2
 10 deny ip any any
+exit
 
 ip access-list extended MGMT_ACL
 remark PERMIT_ANY
