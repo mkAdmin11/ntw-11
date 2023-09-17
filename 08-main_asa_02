@@ -16,7 +16,8 @@ domain-name my.local
 crypto key generate rsa general-keys modulus 1024
 yes
 
-access-list SSH_ACL permit tcp 172.17.1.0 255.255.255.128 any 
+! access-list SSH_ACL permit tcp 172.17.1.0 255.255.255.128 any 
+ssh 172.17.1.99 255.255.255.128 INSIDE 
 
 interface GigabitEthernet1/1
 description MAIN_BORDER_01
