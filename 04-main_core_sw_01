@@ -104,6 +104,7 @@ exit
 
 interface Vlan200
 description USERS
+ip access-group USERS_ACL in
 ip access-group USERS_ACL out
 ip address 172.17.2.1 255.255.255.0
 ip helper-address 172.17.1.126
@@ -221,10 +222,21 @@ remark PERMIT_ANY
 exit
 
 ip access-list extended USERS_ACL
-remark PERMIT_ANY
-1 permit ip any any
-! remark DENY_ANY
-! 10 deny ip any any
+remark ACCESS_TO_PRINT
+1 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
+2 permit ip 172.17.5.0 0.0.0.127 172.17.2.0 0.0.0.255
+remark ACCESS_TO_INTERNET
+3 permit ip 172.17.2.0 0.0.0.255 8.8.8.0 0.0.0.255
+4 permit ip 8.8.8.0 0.0.0.255 172.17.2.0 0.0.0.255
+remark ACCESS_TO_WEB_SERVER
+5 permit ip 172.17.2.0 0.0.0.255 172.16.100.0 0.0.0.63
+6 permit ip 172.16.100.0 0.0.0.63 172.17.2.0 0.0.0.255
+remark ACCESS_TO_INFRA_SERVER
+7 permit udp any eq bootpc any eq bootps
+8 permit udp 172.17.2.0 0.0.0.255 host 172.17.1.126 eq domain
+9 permit udp host 172.17.1.126 eq domain 172.17.2.0 0.0.0.255
+remark DENY_ANY
+10 deny ip any any
 exit
 
 ip access-list extended WLAN_ACL
