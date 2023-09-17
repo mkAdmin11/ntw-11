@@ -53,7 +53,7 @@ exit
 
 line vty 5 15
 access-class SSH_ACL in
-login authentication default
+login authentication SSH
 transport input ssh
 privilege level 15
 exit
