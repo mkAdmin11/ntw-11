@@ -31,9 +31,9 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
-aaa authentication login CON local enable
-aaa authentication login default group tacacs+ local
-aaa authentication enable default group tacacs+ local enable
+aaa authentication login CON local 
+aaa authentication login SSH group tacacs+ 
+aaa authentication enable default enable 
 
 ip ssh version 2
 ip ssh time-out 60
@@ -62,12 +62,18 @@ exit
 
 line vty 0 4
 access-class SSH_ACL in
-login authentication default
+login authentication SSH
 transport input ssh
 privilege level 15
 exit
 
 spanning-tree mode rapid-pvst
+
+interface Loopback0
+description MGMT
+ip address 172.16.255.3 255.255.255.255
+ip access-group SSH_ACL in
+exit
 
 interface GigabitEthernet0/0
 description INTERNET
@@ -143,9 +149,11 @@ exit
 router ospf 65528
 router-id 0.2.1.1
 ! auto-cost reference-bandwidth 1000
+network 172.16.255.3 0.0.0.0 area 2
 network 172.16.2.0 0.0.0.3 area 2
 network 172.16.2.4 0.0.0.3 area 2
 network 172.18.0.0 0.0.255.255 area 2
+passive-interface Loopback0
 passive-interface gigabitEthernet 0/1
 passive-interface gigabitEthernet 0/1.101
 passive-interface gigabitEthernet 0/1.201
