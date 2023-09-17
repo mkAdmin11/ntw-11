@@ -21,9 +21,9 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key tacasc_server_pass
 
-aaa authentication login CON local enable 
-aaa authentication login default group tacacs+ local
-aaa authentication enable default group tacacs+ local enable
+aaa authentication login CON local 
+aaa authentication login SSH group tacacs+ 
+aaa authentication enable default enable 
 
 ip ssh version 2
 ip ssh time-out 60
@@ -52,7 +52,7 @@ exit
 
 line vty 0 4
 access-class SSH_ACL in
-login authentication default
+login authentication SSH
 transport input ssh
 privilege level 15
 exit
