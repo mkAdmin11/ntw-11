@@ -221,22 +221,38 @@ exit
 no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
 remark PERMIT_DHCP
-1 permit udp any eq bootpc any eq bootps
-2 permit udp any eq bootps any eq bootpc
-remark PERMIT_OSPF
-3 permit ospf host 172.17.1.1 host 224.0.0.5
-4 permit ospf host 172.17.1.2 host 224.0.0.5
-5 permit ospf host 172.17.1.1 host 172.17.1.2
-6 permit ospf host 172.17.1.2 host 172.17.1.1
-remark ACCESS_TO_INFRA_SERVER
-7 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.126
-8 permit ip host 172.17.1.126 172.16.0.0 0.15.255.255
+1 permit udp any range 67 68 any range 67 68
+2 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
+3 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
 remark ACCESS_TO_WLC
 9 permit udp 172.18.1.60 0.0.0.127 host 172.17.1.125 range 5246 5247
 10 permit udp host 172.17.1.125 range 5246 5247 172.18.1.60 0.0.0.127
+remark ACCESS_TO_INFRA_SERVER
+20 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 53
+21 permit udp host 172.17.1.126 eq 53 172.16.0.0 0.15.255.255
+22 permit udp host 172.17.1.126 host 8.8.8.8 eq 53
+23 permit udp host 8.8.8.8 53 host 172.17.1.126
+remark PERMIT_OSPF
+30 permit ospf host 172.17.1.1 host 224.0.0.5
+31 permit ospf host 172.17.1.2 host 224.0.0.5
+32 permit ospf host 172.17.1.1 host 172.17.1.2
+33 permit ospf host 172.17.1.2 host 172.17.1.1
 remark ADMINISTATOR
-20 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.99
-21 permit ip host 172.17.1.99 172.16.0.0 0.15.255.255
+40 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.99
+41 permit tcp host 172.17.1.99 172.16.0.0 0.15.255.255 eq 22
+
+50 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
+51 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
+52 permit tcp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 49
+53 permit tcp host 172.17.1.126 eq 49 172.16.0.0 0.15.255.255
+54 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 1645
+55 permit udp host 172.17.1.126 eq 1645 172.16.0.0 0.15.255.255
+56 permit udp 172.16.0.0.0.15.255.255 host 172.17.1.126 eq 123
+56 permit udp host 172.17.1.126 eq 123 172.16.0.0.0.15.255.255
+
+!remark ACCESS_TO_INFRA_SERVER
+!90 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.126
+!91 permit ip host 172.17.1.126 172.16.0.0 0.15.255.255
 remark DENY_ANY
 100 deny ip any any
 exit
