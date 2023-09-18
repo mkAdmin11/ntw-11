@@ -93,6 +93,7 @@ exit
 
 interface Vlan100
 description MGMT
+ip access-group MGMT_ACL in
 ip access-group MGMT_ACL out
 ip address 172.17.1.1 255.255.255.128
 standby version 2
@@ -117,6 +118,7 @@ exit
 
 interface Vlan300
 description WLAN
+ip access-group WLAN_ACL in
 ip access-group WLAN_ACL out
 ip address 172.17.3.1 255.255.255.0
 ip helper-address 172.17.1.126
@@ -129,6 +131,7 @@ exit
 
 interface Vlan400
 description VOIP
+ip access-group VOIP_ACL in
 ip access-group VOIP_ACL out
 ip address 172.17.4.1 255.255.255.0
 ip helper-address 172.17.1.126
@@ -141,6 +144,7 @@ exit
 
 interface Vlan500
 description PRINT
+ip access-group PRINT_ACL in
 ip access-group PRINT_ACL out
 ip address 172.17.5.1 255.255.255.128
 ip helper-address 172.17.1.126
@@ -214,13 +218,30 @@ passive-interface vlan 400
 passive-interface vlan 500
 exit
 
+no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
-remark PERMIT_ANY
-1 permit ip any any
-! remark DENY_ANY
-! 10 deny ip any any
+remark PERMIT_DHCP
+1 permit udp any eq bootpc any eq bootps
+2 permit udp any eq bootps any eq bootpc
+remark PERMIT_OSPF
+3 permit ospf host 172.17.1.1 host 224.0.0.5
+4 permit ospf host 172.17.1.2 host 224.0.0.5
+5 permit ospf host 172.17.1.1 host 172.17.1.2
+6 permit ospf host 172.17.1.2 host 172.17.1.1
+remark ACCESS_TO_INFRA_SERVER
+7 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.126
+8 permit ip host 172.17.1.126 172.16.0.0 0.15.255.255
+remark ACCESS_TO_WLC
+9 permit udp 172.18.1.60 0.0.0.127 host 172.17.1.125 range 5246 5247
+10 permit udp host 172.17.1.125 range 5246 5247 172.18.1.60 0.0.0.127
+remark ADMINISTATOR
+20 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.99
+21 permit ip host 172.17.1.99 172.16.0.0 0.15.255.255
+remark DENY_ANY
+100 deny ip any any
 exit
 
+no ip access-list extended USERS_ACL
 ip access-list extended USERS_ACL
 remark ACCESS_TO_PRINT
 1 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
@@ -236,28 +257,45 @@ remark ACCESS_TO_INFRA_SERVER
 8 permit udp 172.17.2.0 0.0.0.255 host 172.17.1.126 eq domain
 9 permit udp host 172.17.1.126 eq domain 172.17.2.0 0.0.0.255
 remark DENY_ANY
-10 deny ip any any
+100 deny ip any any
 exit
 
+no ip access-list extended WLAN_ACL
 ip access-list extended WLAN_ACL
-remark PERMIT_ANY
-1 permit ip any any
-! remark DENY_ANY
-! 10 deny ip any any
+remark ACCESS_TO_INTERNET
+1 permit ip 172.17.3.0 0.0.0.255 8.8.8.0 0.0.0.255
+2 permit ip 8.8.8.0 0.0.0.255 172.17.3.0 0.0.0.255
+remark ACCESS_TO_WEB_SERVER
+3 permit ip 172.17.3.0 0.0.0.255 host 172.2.0.2
+4 permit ip host 172.2.0.2 172.17.3.0 0.0.0.255
+remark ACCESS_TO_INFRA_SERVER
+5 permit udp any eq bootpc any eq bootps
+remark DENY_ANY
+100 deny ip any any
 exit
 
+no ip access-list extended VOIP_ACL
 ip access-list extended VOIP_ACL
-remark PERMIT_ANY
-1 permit ip any any
-! remark DENY_ANY
-! 10 deny ip any any
+remark ACCESS_TO_VOICE_NETWORK
+1 permit ip 172.17.4.0 0.0.0.255 172.18.4.0 0.0.0.63
+2 permit ip 172.18.4.0 0.0.0.63 172.17.4.0 0.0.0.255
+remark ACCESS_TO_INFRA_SERVER
+3 permit udp any eq bootpc any eq bootps
+remark DENY_ANY
+100 deny ip any any
 exit
 
+no ip access-list extended PRINT_ACL
 ip access-list extended PRINT_ACL
-remark PERMIT_ANY
-1 permit ip any any
-! remark DENY_ANY
-! 10 deny ip any any
+remark ACCESS_TO_USERS_NETWORK
+1 permit ip 172.17.5.0 0.0.0.127 172.17.2.0 0.0.0.255
+2 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
+3 permit ip 172.17.5.0 0.0.0.127 172.18.2.0 0.0.0.127
+4 permit ip 172.18.2.0 0.0.0.127 172.17.5.0 0.0.0.127
+remark ACCESS_TO_INFRA_SERVER
+9 permit udp any eq bootpc any eq bootps
+remark DENY_ANY
+100 deny ip any any
 exit
 
 exit
