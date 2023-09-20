@@ -28,9 +28,9 @@ aaa new-model
 username admin privilege 15 secret passwd
 enable secret passwd
 
-tacacs-server host 172.17.1.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local 
+aaa authentication login CON local
 aaa authentication login SSH group tacacs+ 
 aaa authentication enable default enable 
 
@@ -84,7 +84,7 @@ encapsulation dot1Q 400
 ip address 172.17.4.254 255.255.255.0
 exit
 
-ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.100
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.400
 
 telephony-service 
 max-ephones 2
