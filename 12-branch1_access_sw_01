@@ -18,11 +18,11 @@ aaa new-model
 username admin privilege 15 secret passwd
 enable secret passwd
 
-tacacs-server host 172.17.1.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local 
-aaa authentication login SSH group tacacs+ 
-aaa authentication enable default enable 
+aaa authentication login CON local
+aaa authentication login SSH group tacacs+
+aaa authentication enable default enable
 
 ip ssh version 2
 ip ssh time-out 60
@@ -87,7 +87,7 @@ ip dhcp snooping information option allow-untrusted
 
 interface Vlan101
 description MGMT
-ip address 172.18.1.11 255.255.255.128
+ip address 172.18.1.11 255.255.255.192
 exit
 
 ip default-gateway 172.18.1.1
