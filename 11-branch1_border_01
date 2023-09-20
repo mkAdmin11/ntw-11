@@ -208,8 +208,6 @@ remark PERMIT_WLC
 remark PERMIT_DNS
 31 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 53
 32 permit udp host 172.17.1.126 eq 53 172.16.0.0 0.15.255.255
-33 permit udp host 172.17.1.126 host 8.8.8.8 eq 53
-34 permit udp host 8.8.8.8 53 host 172.17.1.126
 remark PERMIT_NTP
 41 permit udp 172.16.0.0.0.15.255.255 host 172.17.1.126 eq 123
 42 permit udp host 172.17.1.126 eq 123 172.16.0.0.0.15.255.255
@@ -218,11 +216,6 @@ remark PERMIT_AAA
 52 permit tcp host 172.17.1.126 eq 49 172.16.0.0 0.15.255.255
 53 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 1645
 54 permit udp host 172.17.1.126 eq 1645 172.16.0.0 0.15.255.255
-remark PERMIT_OSPF
-60 permit ospf host 172.17.1.1 host 224.0.0.5
-61 permit ospf host 172.17.1.2 host 224.0.0.5
-62 permit ospf host 172.17.1.1 host 172.17.1.2
-63 permit ospf host 172.17.1.2 host 172.17.1.1
 remark ACCESS_TO_WEB_SERVER
 71 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
 71 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
@@ -241,14 +234,14 @@ exit
 no ip access-list extended USERS_ACL
 ip access-list extended USERS_ACL
 remark ACCESS_TO_PRINT
-11 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
-12 permit ip 172.17.5.0 0.0.0.127 172.17.2.0 0.0.0.255
+11 permit ip 172.18.2.0 0.0.0.127 172.17.5.0 0.0.0.127
+12 permit ip 172.17.5.0 0.0.0.127 172.18.2.0 0.0.0.127
 remark ACCESS_TO_INTERNET
-21 permit ip 172.17.2.0 0.0.0.255 8.8.8.0 0.0.0.255
-22 permit ip 8.8.8.0 0.0.0.255 172.17.2.0 0.0.0.255
+21 permit ip 172.18.2.0 0.0.0.127 8.8.8.0 0.0.0.255
+22 permit ip 8.8.8.0 0.0.0.255 172.18.2.0 0.0.0.127
 remark ACCESS_TO_WEB_SERVER
-31 permit ip 172.17.2.0 0.0.0.255 172.16.100.0 0.0.0.63
-32 permit ip 172.16.100.0 0.0.0.63 172.17.2.0 0.0.0.255
+31 permit ip 172.18.2.0 0.0.0.127 172.16.100.0 0.0.0.63
+32 permit ip 172.16.100.0 0.0.0.63 172.18.2.0 0.0.0.127
 remark PERMIT_DHCP
 41 permit udp any range 67 68 any range 67 68
 42 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
@@ -260,11 +253,11 @@ exit
 no ip access-list extended WLAN_ACL
 ip access-list extended WLAN_ACL
 remark ACCESS_TO_INTERNET
-11 permit ip 172.17.3.0 0.0.0.255 8.8.8.0 0.0.0.255
-12 permit ip 8.8.8.0 0.0.0.255 172.17.3.0 0.0.0.255
+11 permit ip 172.18.3.0 0.0.0.127 8.8.8.0 0.0.0.255
+12 permit ip 8.8.8.0 0.0.0.255 172.17.3.0 0.0.0.127
 remark ACCESS_TO_WEB_SERVER
-21 permit ip 172.17.3.0 0.0.0.255 host 172.2.0.2
-22 permit ip host 172.2.0.2 172.17.3.0 0.0.0.255
+21 permit ip 172.18.3.0 0.0.0.127 host 172.2.0.2
+22 permit ip host 172.2.0.2 172.18.3.0 0.0.0.127
 remark PERMIT_DHCP
 31 permit udp any range 67 68 any range 67 68
 32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
