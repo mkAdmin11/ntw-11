@@ -32,6 +32,7 @@ ip domain-name my.local
 crypto key generate rsa
 1024
 
+no ip access-list extended SSH_ACL
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
 1 permit tcp host 172.17.1.99 any eq 22
