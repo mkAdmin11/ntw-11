@@ -29,11 +29,11 @@ aaa new-model
 username admin privilege 15 secret passwd
 enable secret passwd
 
-tacacs-server host 172.17.1.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local 
-aaa authentication login SSH group tacacs+ 
-aaa authentication enable default enable 
+aaa authentication login CON local
+aaa authentication login SSH group tacacs+
+aaa authentication enable default enable
 
 ip ssh version 2
 ip ssh time-out 60
@@ -43,6 +43,7 @@ ip domain-name my.local
 crypto key generate rsa
 1024
 
+no ip access-list extended SSH_ACL
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
 1 permit tcp host 172.17.1.99 any eq 22
@@ -112,7 +113,7 @@ area 1 nssa no-summary
 ! auto-cost reference-bandwidth 1000
 network 172.16.1.0 0.0.0.3 area 0
 network 172.16.1.8 0.0.0.3 area 1
-network 172.16.255.2 0.0.0.0 area 1
+network 172.16.255.2 0.0.0.0 area 12
 network 172.16.2.4 0.0.0.3 area 2
 passive-interface loopback 0
 exit
@@ -122,20 +123,20 @@ bgp router-id 0.1.1.2
 neighbor 172.2.0.1 remote-as 65100
 exit
 
-ip access-list extended NAT
+ip access-list extended NAT_ACL
 remark PRIVATE_NETWORK
-1 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
+11 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
 remark USERS_TO_INTERNET
-2 permit ip 172.17.2.0 0.0.0.255 any
+21 permit ip 172.17.2.0 0.0.0.255 any
 remark WIFI_TO_INTERNET
-3 permit ip 172.17.3.0 0.0.0.255 any
+31 permit ip 172.17.3.0 0.0.0.255 any
 remark DNS
-4 permit ip host 172.17.1.126 host 8.8.8.8
+41 permit ip host 172.17.1.126 host 8.8.8.8
 remark DENY_ANY
-10 deny ip any any
+100 deny ip any any
 exit
 
-ip nat inside source list NAT interface GigabitEthernet0/0 overload
+ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
 
 ip nat inside source static tcp 172.16.100.2 80 172.2.0.2 80
 ip nat inside source static tcp 172.16.100.2 443 172.2.0.2 443
@@ -143,6 +144,7 @@ ip nat inside source static tcp 172.16.100.2 443 172.2.0.2 443
 ip access-list extended INTERNET_OUT
 1 permit ip host 172.2.0.2 any
 10 deny ip any any
+exit
 
 ip access-list extended INTERNET_IN
 1 permit ip any host 172.2.0.2
