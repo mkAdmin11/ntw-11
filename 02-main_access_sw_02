@@ -18,7 +18,7 @@ aaa new-model
 username admin privilege 15 secret passwd
 enable secret passwd
 
-tacacs-server host 172.17.1.126 key tacasc_server_pass
+tacacs-server host 172.17.1.126 key Passwd
 
 aaa authentication login CON local 
 aaa authentication login SSH group tacacs+ 
