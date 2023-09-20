@@ -16,8 +16,6 @@ domain-name my.local
 crypto key generate rsa general-keys modulus 1024
 yes
 
-ssh 172.17.1.99 255.255.255.128 INSIDE 
-
 interface GigabitEthernet1/1
 description MAIN_BORDER_01
 nameif OUTSIDE
@@ -34,6 +32,8 @@ security-level 100
 ip address 172.16.1.13 255.255.255.252
 no shutdown 
 exit
+
+ssh 172.17.1.99 255.255.255.128 INSIDE 
 
 router ospf 65528
 router-id 0.1.2.1
