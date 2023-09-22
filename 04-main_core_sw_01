@@ -278,6 +278,9 @@ remark PERMIT_DHCP
 41 permit udp any range 67 68 any range 67 68
 42 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 43 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.17.2.0 0.0.0.255 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.17.2.0 0.0.0.255
 remark PERMIT_HSRP
 71 permit ip 172.17.2.0 0.0.0.255 host 224.0.0.102
 72 permit ip host 224.0.0.102 172.17.2.0 0.0.0.255
@@ -298,6 +301,9 @@ remark PERMIT_DHCP
 31 permit udp any range 67 68 any range 67 68
 32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+53 permit udp 172.17.3.0 0.0.0.255 host 8.8.8.8 eq 53
+54 permit udp host 8.8.8.8 eq 53 172.17.3.0 0.0.0.255
 remark PERMIT_HSRP
 71 permit ip 172.17.3.0 0.0.0.255 host 224.0.0.102
 72 permit ip host 224.0.0.102 172.17.3.0 0.0.0.255
@@ -315,6 +321,9 @@ remark PERMIT_DHCP
 31 permit udp any range 67 68 any range 67 68
 32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.17.4.0 0.0.0.255 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.17.4.0 0.0.0.255
 remark PERMIT_HSRP
 71 permit ip 172.17.4.0 0.0.0.255 host 224.0.0.102
 72 permit ip host 224.0.0.102 172.17.4.0 0.0.0.255
@@ -334,6 +343,9 @@ remark PERMIT_DHCP
 21 permit udp any range 67 68 any range 67 68
 22 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 23 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.17.5.0 0.0.0.255 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.17.5.0 0.0.0.255
 remark PERMIT_HSRP
 71 permit ip 172.17.5.0 0.0.0.127 host 224.0.0.102
 72 permit ip host 224.0.0.102 172.17.5.0 0.0.0.127
