@@ -197,12 +197,13 @@ exit
 no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
 remark PERMIT_DHCP
-11 permit udp any range 67 68 any range 67 68
-12 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-13 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+11 permit udp 172.16.0.0 0.15.255.255 eq 68 host 172.17.1.126 eq 67
+12 permit udp 172.17.1.126 0.0.0.0 eq 67 172.16.0.0 0.15.255.255 range 67 68
+13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
+14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
 remark PERMIT_WLC
-21 permit udp 172.18.1.60 0.0.0.127 host 172.17.1.125 range 5246 5247
-22 permit udp host 172.17.1.125 range 5246 5247 172.18.1.60 0.0.0.127
+21 permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
+22 permit udp host 172.17.1.125 range 5246 5247 host 172.18.1.60
 remark PERMIT_DNS
 31 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 53
 32 permit udp host 172.17.1.126 eq 53 172.16.0.0 0.15.255.255
@@ -214,9 +215,9 @@ remark PERMIT_AAA
 52 permit tcp host 172.17.1.126 eq 49 172.16.0.0 0.15.255.255
 53 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 1645
 54 permit udp host 172.17.1.126 eq 1645 172.16.0.0 0.15.255.255
-remark ACCESS_TO_WEB_SERVER
-71 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
-71 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
+! remark ACCESS_TO_WEB_SERVER
+! 71 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
+! 71 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
 remark ADMINISTATOR
 81 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.99
 82 permit tcp host 172.17.1.99 172.16.0.0 0.15.255.255 eq 22
@@ -244,6 +245,9 @@ remark PERMIT_DHCP
 41 permit udp any range 67 68 any range 67 68
 42 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 43 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.18.2.0 0.0.0.127 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.18.2.0 0.0.0.127
 remark DENY_ANY
 100 deny ip any any
 exit
@@ -260,6 +264,9 @@ remark PERMIT_DHCP
 31 permit udp any range 67 68 any range 67 68
 32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+53 permit udp 172.18.3.0 0.0.0.127 host 8.8.8.8 eq 53
+54 permit udp host 8.8.8.8 eq 53 172.18.3.0 0.0.0.127
 remark DENY_ANY
 100 deny ip any any
 exit
@@ -273,6 +280,9 @@ remark PERMIT_DHCP
 31 permit udp any range 67 68 any range 67 68
 32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.18.4.0 0.0.0.63 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.18.4.0 0.0.0.63
 remark DENY_ANY
 100 deny ip any any
 exit
@@ -288,6 +298,9 @@ remark PERMIT_DHCP
 21 permit udp any range 67 68 any range 67 68
 22 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 23 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark PERMIT_DNS
+51 permit udp 172.18.5.0 0.0.0.63 host 172.17.1.126 eq 53
+52 permit udp host 172.17.1.126 eq 53 172.18.5.0 0.0.0.63
 remark DENY_ANY
 100 deny ip any any
 exit
