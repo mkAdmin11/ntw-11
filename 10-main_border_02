@@ -96,7 +96,7 @@ exit
 interface Loopback0
 description MGMT
 ip address 172.16.255.2 255.255.255.255
-ip access-group SSH_ACL in
+! ip access-group SSH_ACL in
 exit
 
 interface Tunnel23
@@ -124,9 +124,9 @@ exit
 ip access-list extended NAT_ACL
 remark PRIVATE_NETWORK
 11 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
-remark USERS_TO_INTERNET
+remark USERS
 21 permit ip 172.17.2.0 0.0.0.255 any
-remark WIFI_TO_INTERNET
+remark WIFI
 31 permit ip 172.17.3.0 0.0.0.255 any
 remark DNS
 41 permit ip host 172.17.1.126 host 8.8.8.8
