@@ -219,11 +219,10 @@ passive-interface vlan 400
 passive-interface vlan 500
 exit
 
-
 no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
 remark DHCP
-11 permit udp 172.16.0.0 0.15.255.255 eq 68 host 172.17.1.126 eq 67
+11 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
 12 permit udp host 172.17.1.126 eq 67 172.16.0.0 0.15.255.255 range 67 68
 13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
@@ -278,7 +277,7 @@ remark WEB_SERVER
 31 permit ip 172.17.2.0 0.0.0.255 172.16.100.0 0.0.0.63
 32 permit ip 172.16.100.0 0.0.0.63 172.17.2.0 0.0.0.255
 remark DHCP
-41 permit udp 172.17.2.0 0.0.0.255 eq 68 host 172.17.1.126 eq 67
+41 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
 42 permit udp 172.17.1.126 0.0.0.0 eq 67 172.17.2.0 0.0.0.255 range 67 68
 43 permit icmp host 172.17.1.126 172.17.2.0 0.0.0.255
 44 permit icmp 172.17.2.0 0.0.0.255 host 172.17.1.126
@@ -302,7 +301,7 @@ remark WEB_SERVER
 21 permit ip 172.17.3.0 0.0.0.255 host 172.2.0.2
 22 permit ip host 172.2.0.2 172.17.3.0 0.0.0.255
 remark DHCP
-31 permit udp 172.17.3.0 0.0.0.255 eq 68 host 172.17.1.126 eq 67
+31 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
 32 permit udp 172.17.1.126 0.0.0.0 eq 67 172.17.3.0 0.0.0.255 range 67 68
 33 permit icmp host 172.17.1.126 172.17.3.0 0.0.0.255
 34 permit icmp 172.17.3.0 0.0.0.255 host 172.17.1.126
@@ -323,7 +322,7 @@ remark VOICE_NETWORK
 11 permit ip 172.17.4.0 0.0.0.255 172.18.4.0 0.0.0.63
 12 permit ip 172.18.4.0 0.0.0.63 172.17.4.0 0.0.0.255
 remark DHCP
-21 permit udp 172.17.4.0 0.0.0.255 eq 68 host 172.17.1.126 eq 67
+21 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
 22 permit udp 172.17.1.126 0.0.0.0 eq 67 172.17.4.0 0.0.0.255 range 67 68
 23 permit icmp host 172.17.1.126 172.17.4.0 0.0.0.255
 24 permit icmp 172.17.4.0 0.0.0.255 host 172.17.1.126
@@ -346,7 +345,7 @@ remark USERS_NETWORK
 13 permit ip 172.17.5.0 0.0.0.127 172.18.2.0 0.0.0.127
 14 permit ip 172.18.2.0 0.0.0.127 172.17.5.0 0.0.0.127
 remark DHCP
-21 permit udp 172.17.5.0 0.0.0.127 eq 68 host 172.17.1.126 eq 67
+21 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
 22 permit udp host 172.17.1.126 eq 67 172.17.5.0 0.0.0.127 range 67 68
 23 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 24 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
