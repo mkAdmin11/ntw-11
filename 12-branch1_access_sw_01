@@ -93,7 +93,7 @@ exit
 ip default-gateway 172.18.1.1
 
 interface GigabitEthernet0/1
-description UPLINK_branch1_border_01
+description UPLINK_BRANCH1_BORDER_01
 switchport mode trunk
 switchport trunk allowed vlan 101,201,301,401,501
 ip dhcp snooping trust
