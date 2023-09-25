@@ -19,8 +19,7 @@ yes
 interface GigabitEthernet1/1
 description MAIN_BORDER_01
 nameif OUTSIDE
-security-level 100
-! security-level 0
+security-level 0
 ip address 172.16.1.10 255.255.255.252
 no shutdown
 exit
@@ -36,8 +35,7 @@ exit
 interface GigabitEthernet1/3
 description MAIN_WEB_SERVER_01
 nameif DMZ
-security-level 100
-! security-level 50
+security-level 50
 ip address 172.16.100.1 255.255.255.192
 no shutdown
 exit
@@ -54,8 +52,28 @@ exit
 
 policy-map global_policy
 class inspection_default
-inspect icmp 
+no inspect ftp
+no inspect tftp
+no inspect dns preset_dns_map
+inspect icmp
+inspect http
+inspect dns
 exit
+
+no policy-map type inspect dns preset_dns_map
+
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 eq 68 host 172.17.1.126 eq 67
+access-list OUTSIDE_ACL extended permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 53
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 123
+access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 49
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 1645
+access-list OUTSIDE_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 80
+access-list OUTSIDE_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 443
+access-list OUTSIDE_ACL extended permit ip 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit ip 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
+
+access-group OUTSIDE_ACL in interface OUTSIDE
 
 exit
 
