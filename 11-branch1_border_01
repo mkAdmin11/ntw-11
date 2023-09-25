@@ -71,7 +71,7 @@ spanning-tree mode rapid-pvst
 interface Loopback0
 description MGMT
 ip address 172.16.255.10 255.255.255.255
-ip access-group SSH_ACL in
+! ip access-group SSH_ACL in
 exit
 
 interface GigabitEthernet0/0
@@ -174,9 +174,9 @@ exit
 ip access-list extended NAT_ACL
 remark PRIVATE_NETWORK
 11 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
-remark USERS_TO_INTERNET
+remark USERS
 21 permit ip 172.18.2.0 0.0.0.127 any
-remark WIFI_TO_INTERNET
+remark WIFI
 31 permit ip 172.18.3.0 0.0.0.127 any
 remark DENY_ANY
 100 deny ip any any
@@ -196,33 +196,33 @@ exit
 
 no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
-remark PERMIT_DHCP
-11 permit udp 172.16.0.0 0.15.255.255 eq 68 host 172.17.1.126 eq 67
-12 permit udp 172.17.1.126 0.0.0.0 eq 67 172.16.0.0 0.15.255.255 range 67 68
-13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
-remark PERMIT_WLC
+! remark PERMIT_DHCP
+! 11 permit udp 172.16.0.0 0.15.255.255 eq 68 host 172.17.1.126 eq 67
+! 12 permit udp 172.17.1.126 0.0.0.0 eq 67 172.16.0.0 0.15.255.255 range 67 68
+! 13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
+! 14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark WLC
 21 permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 22 permit udp host 172.17.1.125 range 5246 5247 host 172.18.1.60
-remark PERMIT_DNS
-31 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 53
-32 permit udp host 172.17.1.126 eq 53 172.16.0.0 0.15.255.255
-remark PERMIT_NTP
-41 permit udp 172.16.0.0.0.15.255.255 host 172.17.1.126 eq 123
-42 permit udp host 172.17.1.126 eq 123 172.16.0.0.0.15.255.255
-remark PERMIT_AAA
-51 permit tcp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 49
-52 permit tcp host 172.17.1.126 eq 49 172.16.0.0 0.15.255.255
-53 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 1645
-54 permit udp host 172.17.1.126 eq 1645 172.16.0.0 0.15.255.255
+remark DNS
+31 permit udp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 53
+32 permit udp host 172.17.1.126 eq 53 172.18.1.0 0.0.0.63
+remark NTP
+41 permit udp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 123
+42 permit udp host 172.17.1.126 eq 123 172.18.1.0 0.0.0.63
+remark AAA
+51 permit tcp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 49
+52 permit tcp host 172.17.1.126 eq 49 172.18.1.0 0.0.0.63
+53 permit udp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 1645
+54 permit udp host 172.17.1.126 eq 1645 172.18.1.0 0.0.0.63
 ! remark ACCESS_TO_WEB_SERVER
 ! 71 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
 ! 71 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
 remark ADMINISTATOR
-81 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.99
-82 permit tcp host 172.17.1.99 172.16.0.0 0.15.255.255 eq 22
-83 permit icmp host 172.17.1.99 172.16.0.0 0.15.255.255
-84 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.99
+81 permit tcp 172.18.1.0 0.0.0.63 eq 22 host 172.17.1.99
+82 permit tcp host 172.17.1.99 172.18.1.0 0.0.0.63 eq 22
+83 permit icmp host 172.17.1.99 172.18.1.0 0.0.0.63
+84 permit icmp 172.18.1.0 0.0.0.63 host 172.17.1.99
 ! remark ACCESS_TO_INFRA_SERVER
 ! 90 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.126
 ! 91 permit ip host 172.17.1.126 172.16.0.0 0.15.255.255
@@ -232,20 +232,23 @@ exit
 
 no ip access-list extended USERS_ACL
 ip access-list extended USERS_ACL
-remark ACCESS_TO_PRINT
+remark PRINT_NETWORK
 11 permit ip 172.18.2.0 0.0.0.127 172.17.5.0 0.0.0.127
 12 permit ip 172.17.5.0 0.0.0.127 172.18.2.0 0.0.0.127
-remark ACCESS_TO_INTERNET
+13 permit ip 172.18.2.0 0.0.0.127 172.18.5.0 0.0.0.63
+14 permit ip 172.18.5.0 0.0.0.63 172.18.2.0 0.0.0.127
+remark INTERNET
 21 permit ip 172.18.2.0 0.0.0.127 8.8.8.0 0.0.0.255
 22 permit ip 8.8.8.0 0.0.0.255 172.18.2.0 0.0.0.127
-remark ACCESS_TO_WEB_SERVER
+remark WEB_SERVER
 31 permit ip 172.18.2.0 0.0.0.127 172.16.100.0 0.0.0.63
 32 permit ip 172.16.100.0 0.0.0.63 172.18.2.0 0.0.0.127
-remark PERMIT_DHCP
-41 permit udp any range 67 68 any range 67 68
-42 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-43 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
-remark PERMIT_DNS
+remark DHCP
+41 permit udp 172.18.2.0 0.0.0.127 eq 68 host 172.17.1.126 eq 67
+42 permit udp host 172.17.1.126 eq 67 172.18.2.0 0.0.0.127 range 67 68
+43 permit icmp host 172.17.1.126 172.18.2.0 0.0.0.127
+44 permit icmp 172.18.2.0 0.0.0.127 host 172.17.1.126
+remark DNS
 51 permit udp 172.18.2.0 0.0.0.127 host 172.17.1.126 eq 53
 52 permit udp host 172.17.1.126 eq 53 172.18.2.0 0.0.0.127
 remark DENY_ANY
@@ -254,17 +257,18 @@ exit
 
 no ip access-list extended WLAN_ACL
 ip access-list extended WLAN_ACL
-remark ACCESS_TO_INTERNET
+remark INTERNET
 11 permit ip 172.18.3.0 0.0.0.127 8.8.8.0 0.0.0.255
 12 permit ip 8.8.8.0 0.0.0.255 172.17.3.0 0.0.0.127
-remark ACCESS_TO_WEB_SERVER
+remark WEB_SERVER
 21 permit ip 172.18.3.0 0.0.0.127 host 172.2.0.2
 22 permit ip host 172.2.0.2 172.18.3.0 0.0.0.127
-remark PERMIT_DHCP
-31 permit udp any range 67 68 any range 67 68
-32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
-remark PERMIT_DNS
+remark DHCP
+31 permit udp 172.18.3.0 0.0.0.127 eq 68 host 172.17.1.126 eq 67
+32 permit udp host 172.17.1.126 eq 67 172.18.3.0 0.0.0.127 range 67 68
+33 permit icmp host 172.17.1.126 172.18.3.0 0.0.0.127
+34 permit icmp 172.18.3.0 0.0.0.127 host 172.17.1.126
+remark DNS
 53 permit udp 172.18.3.0 0.0.0.127 host 8.8.8.8 eq 53
 54 permit udp host 8.8.8.8 eq 53 172.18.3.0 0.0.0.127
 remark DENY_ANY
@@ -273,14 +277,15 @@ exit
 
 no ip access-list extended VOIP_ACL
 ip access-list extended VOIP_ACL
-remark ACCESS_TO_VOICE_NETWORK
+remark VOICE_NETWORK
 11 permit ip 172.17.4.0 0.0.0.255 172.18.4.0 0.0.0.63
 12 permit ip 172.18.4.0 0.0.0.63 172.17.4.0 0.0.0.255
-remark PERMIT_DHCP
-31 permit udp any range 67 68 any range 67 68
-32 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-33 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
-remark PERMIT_DNS
+remark DHCP
+31 permit udp 172.18.4.0 0.0.0.63 eq 68 host 172.17.1.126 eq 67
+32 permit udp host 172.17.1.126 eq 67 172.18.4.0 0.0.0.63 range 67 68
+33 permit icmp host 172.17.1.126 172.18.4.0 0.0.0.63 
+34 permit icmp 172.18.4.0 0.0.0.63 host 172.17.1.126
+remark DNS
 51 permit udp 172.18.4.0 0.0.0.63 host 172.17.1.126 eq 53
 52 permit udp host 172.17.1.126 eq 53 172.18.4.0 0.0.0.63
 remark DENY_ANY
@@ -289,15 +294,16 @@ exit
 
 no ip access-list extended PRINT_ACL
 ip access-list extended PRINT_ACL
-remark ACCESS_TO_USERS_NETWORK
-11 permit ip 172.17.5.0 0.0.0.127 172.17.2.0 0.0.0.255
-12 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
-13 permit ip 172.17.5.0 0.0.0.127 172.18.2.0 0.0.0.127
-14 permit ip 172.18.2.0 0.0.0.127 172.17.5.0 0.0.0.127
-remark PERMIT_DHCP
-21 permit udp any range 67 68 any range 67 68
-22 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-23 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+remark USERS_NETWORK
+11 permit ip 172.17.2.0 0.0.0.255 172.18.5.0 0.0.0.63
+12 permit ip 172.18.5.0 0.0.0.63 172.17.2.0 0.0.0.255
+13 permit ip 172.18.2.0 0.0.0.127 172.18.5.0 0.0.0.63
+14 permit ip 172.18.5.0 0.0.0.63 172.18.2.0 0.0.0.127
+remark DHCP
+31 permit udp 172.18.5.0 0.0.0.63 eq 68 host 172.17.1.126 eq 67
+32 permit udp host 172.17.1.126 eq 67 172.18.5.0 0.0.0.63 range 67 68
+22 permit icmp host 172.17.1.126 172.18.5.0 0.0.0.63
+23 permit icmp 172.18.5.0 0.0.0.63 host 172.17.1.126
 remark PERMIT_DNS
 51 permit udp 172.18.5.0 0.0.0.63 host 172.17.1.126 eq 53
 52 permit udp host 172.17.1.126 eq 53 172.18.5.0 0.0.0.63
