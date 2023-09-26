@@ -295,9 +295,9 @@ remark DHCP
 11 permit udp any range 67 68 any range 67 68
 12 permit icmp host 172.17.1.126 172.17.3.0 0.0.0.255
 13 permit icmp 172.17.3.0 0.0.0.255 host 172.17.1.126
-remark DNS
-21 permit udp 172.17.3.0 0.0.0.255 host 8.8.8.8 eq 53
-22 permit udp host 8.8.8.8 eq 53 172.17.3.0 0.0.0.255
+! remark DNS
+! 21 permit udp 172.17.3.0 0.0.0.255 host 8.8.8.8 eq 53
+! 22 permit udp host 8.8.8.8 eq 53 172.17.3.0 0.0.0.255
 remark HSRP
 31 permit udp 172.17.3.0 0.0.0.255 host 224.0.0.102 eq 1985
 32 permit udp host 224.0.0.102 eq 1985 172.17.3.0 0.0.0.255
