@@ -215,9 +215,7 @@ no ip access-list extended MGMT_ACL
 
 ip access-list extended MGMT_ACL
 remark DHCP
-10 permit udp host 0.0.0.0 eq 68 host 255.255.255.255 eq 67
-11 permit udp 172.16.0.0 0.15.255.255 eq 68 host 172.17.1.126 eq 67
-12 permit udp host 172.17.1.126 eq 67 172.16.0.0 0.15.255.255 range 67 68
+11 permit udp any range 67 68 any range 67 68
 13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
 14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
 remark DNS
