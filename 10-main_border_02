@@ -15,10 +15,8 @@ hostname main_border_02
 
 clock timezone MSK 3
 ntp server 172.17.1.126
-ntp trusted-key 4294967282
 
 ip name-server 172.17.1.126
-! no ip domain-lookup
 
 service password-encryption
 
@@ -96,7 +94,6 @@ exit
 interface Loopback0
 description MGMT
 ip address 172.16.255.2 255.255.255.255
-! ip access-group SSH_ACL in
 exit
 
 interface Tunnel23
@@ -108,7 +105,6 @@ exit
 router ospf 65528
 router-id 0.1.1.2
 area 1 nssa no-summary
-! auto-cost reference-bandwidth 1000
 network 172.16.1.0 0.0.0.3 area 0
 network 172.16.1.8 0.0.0.3 area 1
 network 172.16.255.2 0.0.0.0 area 0
