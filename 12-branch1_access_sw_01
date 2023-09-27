@@ -32,7 +32,7 @@ crypto key generate rsa
 
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
-1 permit tcp host 172.17.1.127 any eq 22
+1 permit tcp host 172.17.1.126 any eq 22
 remark DENY_ANY
 10 deny ip any any
 exit
