@@ -6,10 +6,8 @@ hostname branch1_access_sw_01
 
 clock timezone MSK 3
 ntp server 172.17.1.126
-ntp trusted-key 4294967282
 
 ip name-server 172.17.1.126
-! no ip domain-lookup
 
 service password-encryption
 
@@ -20,7 +18,7 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local
+aaa authentication login default local
 aaa authentication login SSH group tacacs+
 aaa authentication enable default enable
 
@@ -34,13 +32,13 @@ crypto key generate rsa
 
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
-1 permit tcp host 172.17.1.99 any eq 22
+1 permit tcp host 172.17.1.127 any eq 22
 remark DENY_ANY
 10 deny ip any any
 exit
 
 line con 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
@@ -111,7 +109,7 @@ switchport access vlan 201
 switchport voice vlan 401
 switchport port-security
 switchport port-security mac-address sticky 
-switchport port-security maximum 4
+switchport port-security maximum 3
 switchport port-security violation restrict
 switchport port-security aging time 1440
 spanning-tree portfast
