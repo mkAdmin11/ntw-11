@@ -18,7 +18,7 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local 
+aaa authentication login default local
 aaa authentication login SSH group tacacs+ 
 aaa authentication enable default enable 
 
@@ -33,13 +33,13 @@ crypto key generate rsa
 no ip access-list extended SSH_ACL
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
-1 permit tcp host 172.17.1.99 any eq 22
+1 permit tcp host 172.17.1.126 any eq 22
 remark DENY_ANY
 10 deny ip any any
 exit
 
 line con 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
@@ -136,21 +136,7 @@ spanning-tree bpduguard enable
 no shutdown
 exit
 
-interface FastEthernet0/3
-description ADMINISTRATOR
-switchport mode access
-switchport access vlan 100
-switchport port-security
-switchport port-security mac-address sticky 
-switchport port-security maximum 2
-switchport port-security violation restrict
-switchport port-security aging time 1440
-spanning-tree portfast
-spanning-tree bpduguard enable
-no shutdown
-exit
-
-interface range FastEthernet0/4-24
+interface range FastEthernet0/3-24
 shutdown
 exit
 
