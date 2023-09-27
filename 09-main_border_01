@@ -85,7 +85,7 @@ interface GigabitEthernet0/1/0
 description MAIN_BORDER_02
 ip addres 172.16.1.1 255.255.255.252
 ip nat inside
-! ip ospf cost 5000
+ip ospf cost 5000
 no shutdown 
 exit
 
