@@ -27,7 +27,7 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local
+aaa authentication login default local
 aaa authentication login SSH group tacacs+
 aaa authentication enable default enable
 
@@ -41,18 +41,18 @@ crypto key generate rsa
 
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
-1 permit tcp host 172.17.1.99 any eq 22
+1 permit tcp host 172.17.1.127 any eq 22
 remark DENY_ANY
 10 deny ip any any
 exit
 
 line con 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
 line aux 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
@@ -78,7 +78,6 @@ interface GigabitEthernet0/1
 description MAIN_ASA_01
 ip address 172.16.1.5 255.255.255.252
 ip nat inside
-ip ospf cost 1
 no shutdown 
 exit
 
@@ -86,7 +85,7 @@ interface GigabitEthernet0/1/0
 description MAIN_BORDER_02
 ip addres 172.16.1.1 255.255.255.252
 ip nat inside
-ip ospf cost 5000
+! ip ospf cost 5000
 no shutdown 
 exit
 
