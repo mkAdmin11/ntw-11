@@ -18,7 +18,7 @@ enable secret passwd
 
 tacacs-server host 172.17.1.126 key passwd
 
-aaa authentication login CON local 
+aaa authentication login default local
 aaa authentication login SSH group tacacs+ 
 aaa authentication enable default enable 
 
@@ -33,18 +33,18 @@ crypto key generate rsa
 no ip access-list extended SSH_ACL
 ip access-list extended SSH_ACL
 remark ADMINISTRATOR
-1 permit tcp host 172.17.1.99 any eq 22
+1 permit tcp host 172.17.1.126 any eq 22
 remark DENY_ANY
 10 deny ip any any
 exit
 
 line con 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
 line aux 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
@@ -190,7 +190,6 @@ interface GigabitEthernet0/1
 description UPLINK_MAIN_ASA_02
 no switchport
 ip address 172.16.1.18 255.255.255.252
-ip ospf cost 4
 no shutdown
 exit
 
@@ -216,8 +215,6 @@ no ip access-list extended MGMT_ACL
 ip access-list extended MGMT_ACL
 remark DHCP
 11 permit udp any range 67 68 any range 67 68
-13 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
-14 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
 remark DNS
 21 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 53
 22 permit udp host 172.17.1.126 eq 53 172.16.0.0 0.15.255.255
@@ -242,11 +239,11 @@ remark WEB_SERVER
 remark BRANCH1_WLC
 81 permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 82 permit udp host 172.17.1.125 range 5246 5247 host 172.18.1.60
-remark ADMINISTATOR
-91 permit tcp host 172.17.1.99 172.16.0.0 0.15.255.255 eq 22
-92 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.99
-93 permit icmp host 172.17.1.99 172.16.0.0 0.15.255.255
-94 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.99
+remark ADMINISTRATOR
+91 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
+92 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+93 permit tcp host 172.17.1.126 172.16.0.0 0.15.255.255 eq 22
+94 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.126
 remark DENY_ANY
 100 deny ip any any
 exit
@@ -256,8 +253,8 @@ no ip access-list extended USERS_ACL
 ip access-list extended USERS_ACL
 remark DHCP
 11 permit udp any range 67 68 any range 67 68
-12 permit icmp host 172.17.1.126 172.17.2.0 0.0.0.255
-13 permit icmp 172.17.2.0 0.0.0.255 host 172.17.1.126
+13 permit icmp host 172.17.1.126 172.17.2.0 0.0.0.255
+14 permit icmp 172.17.2.0 0.0.0.255 host 172.17.1.126
 remark DNS
 21 permit udp 172.17.2.0 0.0.0.255 host 172.17.1.126 eq 53
 22 permit udp host 172.17.1.126 eq 53 172.17.2.0 0.0.0.255
@@ -267,6 +264,8 @@ remark HSRP
 remark PRINT_NETWORK
 41 permit ip 172.17.2.0 0.0.0.255 172.17.5.0 0.0.0.127
 42 permit ip 172.17.5.0 0.0.0.127 172.17.2.0 0.0.0.255
+41 permit ip 172.17.2.0 0.0.0.255 172.18.5.0 0.0.0.63
+43 permit ip 172.18.5.0 0.0.0.63 172.17.2.0 0.0.0.255
 remark INTERNET
 51 permit ip 172.17.2.0 0.0.0.255 8.8.8.0 0.0.0.255
 52 permit ip 8.8.8.0 0.0.0.255 172.17.2.0 0.0.0.255
@@ -338,6 +337,7 @@ remark USERS_NETWORK
 remark DENY_ANY
 100 deny ip any any
 exit
+
 
 exit
 
