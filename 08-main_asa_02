@@ -73,10 +73,11 @@ access-list OUTSIDE_ACL extended permit ip 172.18.4.0 255.255.255.192 172.17.4.0
 access-list OUTSIDE_ACL extended permit ip 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
 access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 eq 22 host 172.17.1.126
 access-list OUTSIDE_ACL extended permit icmp 172.16.0.0 255.240.0.0 host 172.17.1.126
-access-list DMZ_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 80
-access-list DMZ_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 443
 
 access-group OUTSIDE_ACL in interface OUTSIDE
+
+access-list DMZ_ACL extended permit ip 172.16.100.0 255.255.255.192 any 
+
 access-group DMZ_ACL in interface DMZ
 
 exit
