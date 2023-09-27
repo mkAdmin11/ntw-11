@@ -240,8 +240,10 @@ remark BRANCH1_WLC
 81 permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 82 permit udp host 172.17.1.125 range 5246 5247 host 172.18.1.60
 remark ADMINISTRATOR
-91 permit ip host 172.17.1.126 172.16.0.0 0.15.255.255
-92 permit ip 172.16.0.0 0.15.255.255 host 172.17.1.126
+91 permit icmp host 172.17.1.126 172.16.0.0 0.15.255.255
+92 permit icmp 172.16.0.0 0.15.255.255 host 172.17.1.126
+93 permit tcp host 172.17.1.126 172.16.0.0 0.15.255.255 eq 22
+94 permit tcp 172.16.0.0 0.15.255.255 eq 22 host 172.17.1.126
 remark DENY_ANY
 100 deny ip any any
 exit
