@@ -52,41 +52,15 @@ exit
 
 no policy-map type inspect dns preset_dns_map
 
-! access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 eq 68 host 172.17.1.126 eq 67
-! access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 53
-! access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 123
-! access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 49
-! access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 1645
-! access-list OUTSIDE_ACL extended permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
-!
-! access-list OUTSIDE_ACL extended permit tcp 8.8.8.0 255.255.255.0 eq 80 172.16.0.0 255.240.0.0
-! access-list OUTSIDE_ACL extended permit tcp 8.8.8.0 255.255.255.0 eq 443 172.16.0.0 255.240.0.0
-!
-! access-list OUTSIDE_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 80
-! access-list OUTSIDE_ACL extended permit tcp any 172.16.100.0 255.255.255.192 eq 443
-!
-! access-list OUTSIDE_ACL extended permit ip 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
-! access-list OUTSIDE_ACL extended permit ip 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
-!
-!!!! access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 eq 22 host 172.17.1.126
-!!!! access-list OUTSIDE_ACL extended permit icmp 172.16.0.0 255.240.0.0 host 172.17.1.126
-!
-! access-group OUTSIDE_ACL in interface OUTSIDE 
-
-object-group service BRANCH1_INFR_OBJ
-service-object udp source eq 68
-service-object udp destination eq 67
-service-object udp destination eq 53
-service-object udp destination eq 123
-service-object tcp destination eq 49
-service-object udp destination eq 1645
+object-group service INFR_OBJ
+service-object tcp-udp
 service-object icmp
 exit
 conf t
 
-object-group service BRANCH1_AP_OBJ
-service-object udp destination eq 5246
-service-object udp destination eq 5247
+object-group service AP_OBJ
+service-object tcp-udp
+service-object icmp
 exit
 conf t
 
@@ -96,7 +70,7 @@ service-object tcp destination eq 443
 exit
 conf t
 
-object-group service PUBLIC_DNS_OBJ
+object-group service DNS_OBJ
 service-object udp source eq 53
 exit
 conf t
@@ -107,20 +81,19 @@ service-object icmp
 exit
 conf t
 
-object-group service BRANCH1_USERS_OBJ
+object-group service USERS_OBJ
 service-object tcp-udp
 service-object icmp
 exit
 conf t
 
-! access-list OUTSIDE_ACL extended permit object-group BRANCH1_INFR_OBJ 172.16.0.0 255.240.0.0 host 172.17.1.126
-! access-list OUTSIDE_ACL extended permit object-group BRANCH1_AP_OBJ host 172.18.1.60 host 172.17.1.125
-! access-list OUTSIDE_ACL extended permit object-group WEB_OBJ any 172.16.100.0 255.255.255.192
-! access-list OUTSIDE_ACL extended permit object-group PUBLIC_DNS_OBJ host 8.8.8.8 host 172.17.1.126
-! access-list OUTSIDE_ACL extended permit object-group VOIP_OBJ 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
-! access-list OUTSIDE_ACL extended permit object-group BRANCH1_USERS_OBJ 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
+access-list OUTSIDE_ACL extended permit object-group INFR_OBJ 172.16.0.0 255.240.0.0 host 172.17.1.126
+access-list OUTSIDE_ACL extended permit object-group AP_OBJ host 172.18.1.60 host 172.17.1.125
+access-list OUTSIDE_ACL extended permit object-group WEB_OBJ any 172.16.100.0 255.255.255.192
+access-list OUTSIDE_ACL extended permit object-group DNS_OBJ host 8.8.8.8 host 172.17.1.126
+access-list OUTSIDE_ACL extended permit object-group VOIP_OBJ 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit object-group USERS_OBJ 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
 
-access-list OUTSIDE_ACL extended permit object-group BRANCH1_INFR_OBJ any any
 access-group OUTSIDE_ACL in interface OUTSIDE
 
 exit
