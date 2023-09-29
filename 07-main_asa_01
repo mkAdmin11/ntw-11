@@ -113,13 +113,14 @@ service-object icmp
 exit
 conf t
 
-access-list OUTSIDE_ACL extended permit object-group BRANCH1_INFR_OBJ 172.16.0.0 255.240.0.0 host 172.17.1.126
-access-list OUTSIDE_ACL extended permit object-group BRANCH1_AP_OBJ host 172.18.1.60 host 172.17.1.125
-access-list OUTSIDE_ACL extended permit object-group WEB_OBJ any 172.16.100.0 255.255.255.192
-access-list OUTSIDE_ACL extended permit object-group PUBLIC_DNS_OBJ host 8.8.8.8 host 172.17.1.126
-access-list OUTSIDE_ACL extended permit object-group VOIP_OBJ 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
-access-list OUTSIDE_ACL extended permit object-group BRANCH1_USERS_OBJ 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
+! access-list OUTSIDE_ACL extended permit object-group BRANCH1_INFR_OBJ 172.16.0.0 255.240.0.0 host 172.17.1.126
+! access-list OUTSIDE_ACL extended permit object-group BRANCH1_AP_OBJ host 172.18.1.60 host 172.17.1.125
+! access-list OUTSIDE_ACL extended permit object-group WEB_OBJ any 172.16.100.0 255.255.255.192
+! access-list OUTSIDE_ACL extended permit object-group PUBLIC_DNS_OBJ host 8.8.8.8 host 172.17.1.126
+! access-list OUTSIDE_ACL extended permit object-group VOIP_OBJ 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
+! access-list OUTSIDE_ACL extended permit object-group BRANCH1_USERS_OBJ 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
 
+access-list OUTSIDE_ACL extended permit object-group BRANCH1_INFR_OBJ any any
 access-group OUTSIDE_ACL in interface OUTSIDE
 
 exit
