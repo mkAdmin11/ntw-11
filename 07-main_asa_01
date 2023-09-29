@@ -52,47 +52,25 @@ exit
 
 no policy-map type inspect dns preset_dns_map
 
-object-group service INFR_OBJ
-service-object tcp-udp
-service-object icmp
-exit
-conf t
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 eq 68 host 172.17.1.126 eq 67
+access-list OUTSIDE_ACL extended permit udp host 8.8.8.8 eq 53 host 172.17.1.126
+access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 eq 22 host 172.17.1.126
+access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 49
+access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 53
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 123
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 1645
+access-list OUTSIDE_ACL extended permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 
-object-group service AP_OBJ
-service-object tcp-udp
-service-object icmp
-exit
-conf t
+access-list OUTSIDE_ACL extended permit tcp 8.8.8.0 255.255.255.0 eq 80 172.17.2.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit icmp 8.8.8.0 255.255.255.0 172.17.2.0 255.255.255.0
 
-object-group service WEB_OBJ
-service-object tcp destination eq 80
-service-object tcp destination eq 443
-exit
-conf t
+access-list OUTSIDE_ACL extended permit tcp 8.8.8.0 255.255.255.0 eq 80 172.17.3.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit udp host 8.8.8.8 eq 53 172.17.3.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit icmp 8.8.8.0 255.255.255.0 172.17.3.0 255.255.255.0
 
-object-group service DNS_OBJ
-service-object udp source eq 53
-exit
-conf t
+access-list OUTSIDE_ACL extended permit ip 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
 
-object-group service VOIP_OBJ
-service-object tcp-udp
-service-object icmp
-exit
-conf t
-
-object-group service USERS_OBJ
-service-object tcp-udp
-service-object icmp
-exit
-conf t
-
-access-list OUTSIDE_ACL extended permit object-group INFR_OBJ 172.16.0.0 255.240.0.0 host 172.17.1.126
-access-list OUTSIDE_ACL extended permit object-group AP_OBJ host 172.18.1.60 host 172.17.1.125
-access-list OUTSIDE_ACL extended permit object-group WEB_OBJ any 172.16.100.0 255.255.255.192
-access-list OUTSIDE_ACL extended permit object-group DNS_OBJ host 8.8.8.8 host 172.17.1.126
-access-list OUTSIDE_ACL extended permit object-group VOIP_OBJ 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
-access-list OUTSIDE_ACL extended permit object-group USERS_OBJ 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
+access-list OUTSIDE_ACL extended permit ip 172.18.2.0 255.255.255.127 172.17.5.0 255.255.255.127
 
 access-group OUTSIDE_ACL in interface OUTSIDE
 
