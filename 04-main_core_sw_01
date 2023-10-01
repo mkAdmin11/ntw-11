@@ -237,6 +237,8 @@ remark AAA
 remark NTP
 61 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 123
 62 permit udp host 172.17.1.126 eq 123 172.16.0.0 0.15.255.255
+remark SYSLOG
+65 permit udp 172.16.0.0 0.15.255.255 host 172.17.1.126 eq 514
 remark WEB_SERVER
 71 permit ip 172.16.0.0 0.15.255.255 172.16.100.0 0.0.0.63
 72 permit ip 172.16.100.0 0.0.0.63 172.16.0.0 0.15.255.255
