@@ -67,6 +67,7 @@ access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 eq 22 host 17
 access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 49
 access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 53
 access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 123
+access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 514
 access-list OUTSIDE_ACL extended permit udp 172.16.0.0 255.240.0.0 host 172.17.1.126 eq 1645
 access-list OUTSIDE_ACL extended permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 
