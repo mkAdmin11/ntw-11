@@ -7,6 +7,10 @@ hostname main_core_sw_02
 clock timezone MSK 3
 ntp server 172.17.1.126
 
+logging 172.17.1.126
+service timestamps log datetime msec
+logging on
+
 ip name-server 172.17.1.126
 
 service password-encryption
