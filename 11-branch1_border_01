@@ -208,6 +208,8 @@ remark AAA
 remark NTP
 31 permit udp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 123
 32 permit udp host 172.17.1.126 eq 123 172.18.1.0 0.0.0.63
+remark SYSLOG
+35 permit udp 172.18.1.0 0.0.0.63 host 172.17.1.126 eq 514
 remark WLC
 41 permit udp host 172.18.1.60 host 172.17.1.125 range 5246 5247
 42 permit udp host 172.17.1.125 range 5246 5247 host 172.18.1.60
