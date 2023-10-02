@@ -69,9 +69,9 @@ access-list OUTSIDE_ACL extended permit tcp 8.8.8.0 255.255.255.0 eq 80 172.17.3
 access-list OUTSIDE_ACL extended permit udp host 8.8.8.8 eq 53 172.17.3.0 255.255.255.0
 access-list OUTSIDE_ACL extended permit icmp 8.8.8.0 255.255.255.0 172.17.3.0 255.255.255.0
 
-access-list OUTSIDE_ACL extended permit ip 172.18.4.0 255.255.255.192 172.17.4.0 255.255.255.0
+access-list OUTSIDE_ACL extended permit tcp 172.18.4.0 255.255.255.192 host 172.17.4.254
 
-access-list OUTSIDE_ACL extended permit ip 172.18.2.0 255.255.255.127 172.17.5.0 255.255.255.127
+access-list OUTSIDE_ACL extended permit icmp 172.18.2.0 255.255.255.128 172.17.5.0 255.255.255.128
 
 access-list OUTSIDE_ACL extended permit tcp 172.16.0.0 255.240.0.0 172.16.100.0 255.255.255.192 eq 80
 access-list OUTSIDE_ACL extended permit icmp 172.16.0.0 255.240.0.0 172.16.100.0 255.255.255.192 
