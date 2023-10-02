@@ -259,7 +259,7 @@ remark DNS
 22 permit udp host 8.8.8.8 eq 53 172.18.3.0 0.0.0.127
 remark INTERNET
 31 permit ip 172.18.3.0 0.0.0.127 8.8.8.0 0.0.0.255
-32 permit ip 8.8.8.0 0.0.0.255 172.17.3.0 0.0.0.127
+32 permit ip 8.8.8.0 0.0.0.255 172.18.3.0 0.0.0.127
 remark WEB_SERVER
 41 permit ip 172.18.3.0 0.0.0.127 host 172.2.0.2
 42 permit ip host 172.2.0.2 172.18.3.0 0.0.0.127
