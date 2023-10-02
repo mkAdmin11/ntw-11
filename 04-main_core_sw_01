@@ -43,12 +43,12 @@ remark DENY_ANY
 exit
 
 line con 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
 line aux 0
-login authentication CON
+login authentication default
 privilege level 15
 exit
 
