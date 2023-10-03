@@ -90,7 +90,8 @@ access-list OUTSIDE_ACL extended permit icmp 172.16.0.0 255.240.0.0 172.16.100.0
 access-group OUTSIDE_ACL in interface OUTSIDE
 
 access-list DMZ_ACL extended permit tcp 172.16.100.0 255.255.255.192 eq 80 any
-access-list DMZ_ACL extended permit icmp 172.16.100.0 255.255.255.192 any
+access-list DMZ_ACL extended permit tcp 172.16.100.0 255.255.255.192 eq 443 any
+access-list DMZ_ACL extended permit icmp 172.16.100.0 255.255.255.192 172.16.0.0 255.240.0.0
 
 access-group DMZ_ACL in interface DMZ
 
