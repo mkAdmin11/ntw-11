@@ -263,8 +263,8 @@ remark INTERNET
 31 permit ip 172.18.3.0 0.0.0.127 8.8.8.0 0.0.0.255
 32 permit ip 8.8.8.0 0.0.0.255 172.18.3.0 0.0.0.127
 remark WEB_SERVER
-41 permit ip 172.18.3.0 0.0.0.127 host 172.2.0.2
-42 permit ip host 172.2.0.2 172.18.3.0 0.0.0.127
+41 permit ip 172.18.3.0 0.0.0.127 host 172.1.0.2
+42 permit ip host 172.1.0.2 172.18.3.0 0.0.0.127
 remark DENY_ANY
 100 deny ip any any
 exit
