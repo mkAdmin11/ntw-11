@@ -143,8 +143,8 @@ exit
 
 ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
 
-ip nat inside source static tcp 172.16.100.2 80 172.2.0.2 80
-ip nat inside source static tcp 172.16.100.2 443 172.2.0.2 443
+! ip nat inside source static tcp 172.16.100.2 80 172.2.0.2 80
+! ip nat inside source static tcp 172.16.100.2 443 172.2.0.2 443
 
 ip access-list extended INTERNET_OUT
 1 permit ip host 172.2.0.2 any
