@@ -114,6 +114,7 @@ network 172.16.1.8 0.0.0.3 area 1
 network 172.16.255.2 0.0.0.0 area 0
 network 172.16.2.4 0.0.0.3 area 2
 passive-interface loopback 0
+distance ospf inter-area 109
 exit
 
 router bgp 65200
