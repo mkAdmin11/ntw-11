@@ -122,7 +122,8 @@ neighbor 172.2.0.1 remote-as 65100
 exit
 
 router eigrp 65200
-redistribute bgp 65200 metric 1000000 1 255 1 1500 
+redistribute bgp 65200 metric 1000000 1 255 1 1500
+distance eigrp 19 19
 network 172.16.1.0 0.0.0.3
 exit
 
