@@ -1,20 +1,11 @@
 
 <table>
     <tr>
-        <th>  </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </th>
-        <th> AS </th>
+        <th><h3> СО </h3></th>
+        <th colspan="9"><h3> Удаленный узел <br/> Интерфейс <br/> Адрес/Маска </h3></th>
     </tr>
     <tr>
-        <th> main_border_01 </th>
+        <th> main_border_01 <br/> AS 65200 </th>
         <td> Internet <br/> Gig0/0 <br/> 172.1.0.2/30 </td>
         <td> main_border_02 <br/> Gig0/1/0 <br/> 172.16.1.1/30 </td>
         <td> main_asa_01 <br/> Gig0/1 <br/> 172.16.1.5/30 </td>
@@ -24,10 +15,9 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td> 65200 </td>
     </tr>
     <tr>
-        <th> main_border_02 </th>
+        <th> main_border_02 <br/> AS 65200 </th>
         <td> Internet <br/> Gig0/0 <br/> 172.2.0.2/30 </td>
         <td> main_border_01 <br/> Gig0/1/0 <br/> 172.16.1.2/30 </td>
         <td> main_asa_02 <br/> Gig0/1 <br/> 172.16.1.9/30 </td>
@@ -37,14 +27,12 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td> 65200 </td>
     </tr>
     <tr>
         <th> main_asa_01 </th>
         <td> main_border_01 <br/> Gig1/1 <br/> 172.16.1.6/30 </td>
         <td> main_core_sw_01 <br/> Gig1/2 <br/> 172.16.1.13/30 </td>
         <td> mgmt <br/> Gig1/2 <br/> 172.16.1.13/30 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -63,12 +51,10 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_web_server_01 </th>
         <td> main_asa_02 <br/> Fa0 <br/> 172.16.100.2/26 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -89,7 +75,6 @@
         <td> ospf <br/> vlan999 <br/> 172.16.1.21/30 </td>
         <td> mgmt <br/> Lo0 <br/> 172.16.255.3/32 </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_core_sw_02 </th>
@@ -102,12 +87,10 @@
         <td> ospf <br/> vlan999 <br/> 172.16.1.22/30 </td>
         <td> mgmt <br/> Lo0 <br/> 172.16.255.4/32 </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_access_sw_01 </th>
         <td> mgmt <br/> vlan100 <br/> 172.17.1.11/25 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -128,12 +111,10 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_access_sw_03 </th>
         <td> mgmt <br/> vlan100 <br/> 172.17.1.13/25 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -154,7 +135,6 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_voip_serv_01 </th>
@@ -167,12 +147,10 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> main_wlc_01 </th>
         <td> mgmt <br/> Gig0 <br/> 172.17.1.101/25 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -193,10 +171,9 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
-        <th> PROVIDER </th>
+        <th> PROVIDER <br/> AS 65100 </th>
         <td> main_border_01 <br/> Gig1/0/1 <br/> 172.1.0.1/30 </td>
         <td> main_border_01 <br/> Gig1/0/2 <br/> 172.2.0.1/30 </td>
         <td> branch1_border_01 <br/> Gig1/0/3 <br/> 172.3.0.1/30 </td>
@@ -206,12 +183,10 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> google </th>
         <td> Internet <br/> Fa0 <br/> 8.8.8.8/24 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
@@ -232,7 +207,6 @@
         <td> main_border_01 <br/> Tun31 <br/> 172.16.2.2/30 </td>
         <td> main_border_02 <br/> Tun32 <br/> 172.16.2.6/30 </td>
         <td> mgmt <br/> Lo0 <br/> 172.16.255.10/32 </td>
-        <td> 65200 </td>
     </tr>
     <tr>
         <th> branch1_access_sw_01 </th>
@@ -245,12 +219,10 @@
         <td>  </td>
         <td>  </td>
         <td>  </td>
-        <td>  </td>
     </tr>
     <tr>
         <th> branch1_ap_01 </th>
         <td> mgmt <br/> vlan100 <br/> 172.18.1.60/26 </td>
-        <td>  </td>
         <td>  </td>
         <td>  </td>
         <td>  </td>
