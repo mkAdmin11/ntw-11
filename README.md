@@ -26,4 +26,5 @@
 План сети в табличном виде:
 - [Таблица подсетей](source/subnets.md).
 - [Сводная таблица по интерфейсам](source/interfaces.md).
+- <a href="source/interfaces.md" target="_blank">Сводная таблица по интерфейсам</a>
 
