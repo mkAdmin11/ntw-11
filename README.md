@@ -17,7 +17,7 @@
 
 Итоговая графическая схема, которая реализована, с планом сети:
 
-<img src="source/План.png" width="800" height="600">
+<img src="source/layout.png" width="800" height="600">
 
 ---
 
