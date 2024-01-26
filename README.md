@@ -30,7 +30,8 @@
 <h3> <a id="title4"> Конфиги </a> </h3>
 
 Список конфигурационных файлов:
-- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- <a href="configs/01_main_infr_serv_01_DHCP.png" target="_blank"> 01_main_infr_serv_01_DHCP </a>.
+- [01_main_infr_serv_01_DHCP](configs/01_main_infr_serv_01_DHCP.png).
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
