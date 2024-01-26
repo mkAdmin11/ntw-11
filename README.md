@@ -27,3 +27,18 @@
 - [Таблица подсетей](source/subnets.md).
 - [Сводная таблица по интерфейсам](source/interfaces.md).
 
+<h3> <a id="title4"> Конфиги </a> </h3>
+
+Список конфигурационных файлов:
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+- [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
+
