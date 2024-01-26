@@ -10,7 +10,7 @@
 
 <h3> <a id="title1"> Задание </a> </h3>
 
-Задание можно посмотреть по [ссылке](https://github.com/netology-code/ntw-diplom/blob/main/README.md), в репозитории Нетологии.
+Задание можно посмотреть по <a href="https://github.com/netology-code/ntw-diplom/blob/main/README.md">ссылке</a>, в репозитории Нетологии.
 
 ---
 
@@ -56,4 +56,3 @@
 - [21_branch1_access_sw_01_startup-config](configs/21_branch1_access_sw_01_startup-config).
 - [22_PROVIDER_startup-config](configs/22_PROVIDER_startup-config).
 
-<a href="configs/22_PROVIDER_startup-config" target="_top">22_PROVIDER_startup-config</a>
