@@ -31,7 +31,7 @@
 
 Список конфигурационных файлов:
 - <a href="https://github.com/mkAdmin11/crpnt-final/blob/main/configs/01_main_infr_serv_01_DHCP.png" target="_blank"> 01_main_infr_serv_01_DHCP </a>.
-- [01_main_infr_serv_01_DHCP](configs/01_main_infr_serv_01_DHCP.png).
+- [01_main_infr_serv_01_DHCP](configs/01_main_infr_serv_01_DHCP.png){:target="_blank"}.
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
 - [main_access_sw_01](configs/11_main_access_sw_01_startup-config).
