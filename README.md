@@ -22,7 +22,7 @@
 
 Итоговая графическая схема, которая реализована, с планом сети:
 
-<img src="source/layout.png" width="800" height="600">
+<img src="source/layout.png" width="800">
 
 ---
 
@@ -73,7 +73,7 @@
 
 ### Тестирование
 
-[Тестирование](testing.md) выполнено по [заданию](https://github.com/netology-code/ntw-diplom/blob/main/README.md#%D1%82%D0%B5%D1%81%D1%82%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5).
+[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#дипломная-работа-профессии-сетевой-инженер) выполнено по [заданию](https://github.com/netology-code/ntw-diplom/blob/main/README.md#тестирование).
 
 ---
 
