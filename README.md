@@ -73,7 +73,7 @@
 
 ### Тестирование
 
-[Тестирование](https://github.com/mkAdmin11/crpnt-final/blob/main/testing/README.md#тестирование) выполнено по [заданию](https://github.com/netology-code/ntw-diplom/blob/main/README.md#тестирование).
+[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#тестирование) выполнено по [заданию](https://github.com/netology-code/ntw-diplom/blob/main/README.md#тестирование).
 
 ---
 
