@@ -63,7 +63,7 @@
 - [main_wlc_01_BRANCH1_WIFI](source/configs_gui/07-main_wlc_01_BRANCH1_WIFI.png).
 - [main_wlc_01_MAIN_AP](source/configs_gui/08-main_wlc_01_MAIN_AP.png).
 - [main_wlc_01_BRANCH1_AP](source/configs_gui/09-main_wlc_01_BRANCH1_AP.png).
-- [PUBLIC_DNS](source/configs_gui/10_PUBLIC_DNS.png).
+- [PUBLIC_DNS](source/configs_gui/10-PUBLIC_DNS.png).
 
 ---
 
