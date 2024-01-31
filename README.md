@@ -87,10 +87,10 @@
 
 ### Пояснительная записка
 
-[Пояснение](https://github.com/mkAdmin11/crpnt-final/tree/main/explanation#пояснительная-записка) к проекту.
+[Пояснение](https://github.com/mkAdmin11/crpnt-final/tree/main/explanation#НЕТОЛОГИЯ-22-23) к проекту.
 
 ---
 
 ### Тестирование
 
-[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#тестирование), выполненое по [требованиям](https://github.com/netology-code/ntw-diplom/blob/main#тестирование) к проекту.
+[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#НЕТОЛОГИЯ-22-23), выполненое по [требованиям](https://github.com/netology-code/ntw-diplom/blob/main#тестирование) к проекту.
