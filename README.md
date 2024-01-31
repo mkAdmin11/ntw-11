@@ -7,7 +7,7 @@
 - [Задание](#Задание)
 - [Графическая схема](#Графическая-схема)
 - [План сети](#План-сети)
-- [Конфиги](#Конфиги)
+- [Конфигурационные файлы](#Конфигурационные-файлы)
 - [Пояснительная записка](#Пояснительная-записка)
 - [Тестирование](#Тестирование)
 - [Файл проекта](#Файл-проекта)
@@ -16,13 +16,31 @@
 
 ### Задание
 
-Задание можно посмотреть по [ссылке](https://github.com/netology-code/ntw-diplom/blob/main/README.md), в репозитории Нетологии.
+Задание к проекту можно найти в [репозитории](https://github.com/netology-code/ntw-diplom/blob/main/README.md) Нетологии.
+
+---
+
+### Файл проекта
+
+[PKR-файл](cpt/ntw-diplom.pkt) проекта.
+
+> [!NOTE]
+> Логин и пароль для подключения к консоли:  
+> *admin*  
+> *passwd*  
+> 
+> Логин и пароль для подключения по SSH:  
+> *tacasc*  
+> *passwd*  
+> 
+> Пароль для перехода в привилегированный режим:  
+> *passwd*  
 
 ---
 
 ### Графическая схема
 
-Итоговая графическая схема, которая реализована, с планом сети:
+Итоговая графическая схема проекта, с планом сети:
 
 <img src="source/layout.png" width="800">
 
@@ -30,15 +48,15 @@
 
 ### План сети
 
-План сети в табличном виде:
+План сети для проекта в табличном виде:
 - [Таблица подсетей](tables/subnets.md).
 - [Сводная таблица по интерфейсам](tables/interfaces.md).
 
 ---
 
-### Конфиги
+### Конфигурационные файлы
 
-Список конфигурационных файлов:
+Список конфигурационных файлов (и комманд к ним):
 - [main_access_sw_01](source/configs_txt/01-main_access_sw_01_startup-config.txt) <sub> [(комманды)](source/commands_txt/01-main_access_sw_01.txt) </sub>.
 - [main_access_sw_02](source/configs_txt/02-main_access_sw_02_startup-config.txt) <sub> [(комманды)](source/commands_txt/02-main_access_sw_02.txt) </sub>.
 - [main_access_sw_03](source/configs_txt/03-main_access_sw_03_startup-config.txt) <sub> [(комманды)](source/commands_txt/03-main_access_sw_03.txt) </sub>.
@@ -69,16 +87,10 @@
 
 ### Пояснительная записка
 
-[Пояснение](https://github.com/mkAdmin11/crpnt-final/tree/main/explanation#пояснительная-записка) к выполненой работе.
+[Пояснение](https://github.com/mkAdmin11/crpnt-final/tree/main/explanation#пояснительная-записка) к проекту.
 
 ---
 
 ### Тестирование
 
-[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#тестирование) выполнено по [заданию](https://github.com/netology-code/ntw-diplom/blob/main#тестирование).
-
----
-
-### Файл проекта
-
-[Ссылка](cpt) на pkt-файл.
+[Тестирование](https://github.com/mkAdmin11/crpnt-final/tree/main/testing#тестирование), выполненое по [требованиям](https://github.com/netology-code/ntw-diplom/blob/main#тестирование) к проекту.
