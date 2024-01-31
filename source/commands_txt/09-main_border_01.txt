@@ -1,0 +1,160 @@
+
+en
+
+vlan database
+vlan 100 name MGMT
+vlan 200 name USERS
+vlan 300 name WLAN
+vlan 400 name VOIP
+vlan 500 name PRINT
+exit
+
+conf t
+
+hostname main_border_01
+
+clock timezone MSK 3
+ntp server 172.17.1.126
+
+logging 172.17.1.126
+service timestamps log datetime msec
+logging on
+
+ip name-server 172.17.1.126
+
+service password-encryption
+
+aaa new-model
+
+username admin privilege 15 secret passwd
+enable secret passwd
+
+tacacs-server host 172.17.1.126 key passwd
+
+aaa authentication login default local
+aaa authentication login SSH group tacacs+
+aaa authentication enable default enable
+
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+ip domain-name my.local
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+remark ADMINISTRATOR
+1 permit tcp host 172.17.1.126 any eq 22
+remark DENY_ANY
+10 deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line aux 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication SSH
+transport input ssh
+privilege level 15
+exit
+
+spanning-tree mode rapid-pvst
+
+interface GigabitEthernet0/0
+description INTERNET
+ip address 172.1.0.2 255.255.255.252
+ip nat outside
+ip access-group INTERNET_IN in
+ip access-group INTERNET_OUT out
+no shutdown 
+exit
+
+interface GigabitEthernet0/1
+description MAIN_ASA_01
+ip address 172.16.1.5 255.255.255.252
+ip nat inside
+no shutdown 
+exit
+
+interface GigabitEthernet0/1/0
+description MAIN_BORDER_02
+ip addres 172.16.1.1 255.255.255.252
+ip nat inside
+ip ospf cost 5000
+no shutdown 
+exit
+
+interface Loopback0
+description MGMT
+ip address 172.16.255.1 255.255.255.255
+exit
+
+interface Tunnel13
+ip address 172.16.2.1 255.255.255.252
+tunnel source GigabitEthernet0/0
+tunnel destination 172.3.0.2
+exit
+
+router ospf 65528
+router-id 0.1.1.1
+area 1 nssa no-summary
+network 172.16.1.0 0.0.0.3 area 0
+network 172.16.1.4 0.0.0.3 area 1
+network 172.16.255.1 0.0.0.0 area 0
+network 172.16.2.0 0.0.0.3 area 2
+passive-interface loopback 0
+exit
+
+router bgp 65200
+bgp router-id 0.1.1.1
+neighbor 172.1.0.1 remote-as 65100
+exit
+
+router eigrp 65200
+redistribute bgp 65200 metric 1000000 1 255 1 1500 
+network 172.16.1.0 0.0.0.3
+exit
+
+ip access-list extended NAT_ACL
+remark PRIVATE_NETWORK
+11 deny ip 172.16.0.0 0.15.255.255 172.16.0.0 0.15.255.255
+remark USERS
+21 permit ip 172.17.2.0 0.0.0.255 any
+remark WIFI
+31 permit ip 172.17.3.0 0.0.0.255 any
+remark DNS
+41 permit ip host 172.17.1.126 host 8.8.8.8
+remark DENY_ANY
+100 deny ip any any
+exit
+
+ip nat inside source list NAT_ACL interface GigabitEthernet0/0 overload
+ip nat inside source static tcp 172.16.100.2 80 172.1.0.2 80 
+ip nat inside source static tcp 172.16.100.2 443 172.1.0.2 443 
+
+ip access-list extended INTERNET_OUT
+10 permit ip host 172.1.0.2 any
+100 deny ip any any
+
+ip access-list extended INTERNET_IN
+10 permit ip any host 172.1.0.2
+100 deny ip any any
+exit
+
+
+exit
+
+copy running-config startup-config 
+
+
+exit
+

@@ -1,0 +1,142 @@
+
+en
+conf t
+
+hostname branch1_access_sw_01
+
+clock timezone MSK 3
+ntp server 172.17.1.126
+
+logging 172.17.1.126
+service timestamps log datetime msec
+logging on
+
+ip name-server 172.17.1.126
+
+service password-encryption
+
+aaa new-model
+
+username admin privilege 15 secret passwd
+enable secret passwd
+
+tacacs-server host 172.17.1.126 key passwd
+
+aaa authentication login default local
+aaa authentication login SSH group tacacs+
+aaa authentication enable default enable
+
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+ip domain-name my.local
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+remark ADMINISTRATOR
+1 permit tcp host 172.17.1.126 any eq 22
+remark DENY_ANY
+10 deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication SSH
+transport input ssh
+privilege level 15
+exit
+
+line vty 5 15
+access-class SSH_ACL in
+login authentication SSH
+transport input ssh
+privilege level 15
+exit
+
+vlan 101
+name MGMT
+exit
+
+vlan 201
+name USERS
+exit
+
+vlan 301
+name WLAN
+exit
+
+vlan 401
+name VOIP
+exit
+
+vlan 501
+name PRINT
+exit
+
+spanning-tree mode rapid-pvst
+spanning-tree vlan 1,101,201,301,401,501,1002-1005 root primary
+
+ip dhcp snooping
+ip dhcp snooping vlan 1,101,201,301,401,501,1002-1005
+ip dhcp snooping information option allow-untrusted
+
+interface Vlan101
+description MGMT
+ip address 172.18.1.11 255.255.255.192
+exit
+
+ip default-gateway 172.18.1.1
+
+interface GigabitEthernet0/1
+description UPLINK_BRANCH1_BORDER_01
+switchport mode trunk
+switchport trunk allowed vlan 101,201,301,401,501
+ip dhcp snooping trust
+no shutdown 
+exit
+
+interface GigabitEthernet0/2
+shutdown 
+exit
+
+interface FastEthernet0/1
+description USERS_&_PHONE
+switchport mode access
+switchport access vlan 201
+switchport voice vlan 401
+switchport port-security
+switchport port-security mac-address sticky 
+switchport port-security maximum 3
+switchport port-security violation restrict
+switchport port-security aging time 1440
+spanning-tree portfast
+spanning-tree bpduguard enable
+no shutdown
+exit
+
+interface FastEthernet0/2
+description WLC_&_WIFI_USERS
+switchport mode trunk
+switchport trunk allowed vlan 101,301
+switchport trunk native vlan 101
+spanning-tree portfast trunk
+spanning-tree bpduguard enable
+no shutdown
+exit
+
+interface range FastEthernet0/3-24
+shutdown
+exit
+
+exit
+
+wr
+
+exit

@@ -1,0 +1,123 @@
+
+en
+
+vlan database
+vlan 100 name MGMT
+vlan 200 name USERS
+vlan 300 name WLAN
+vlan 400 name VOIP
+vlan 500 name PRINT
+exit
+
+conf t
+
+hostname main_voip_serv_01
+
+clock timezone MSK 3
+ntp server 172.17.1.126
+
+logging 172.17.1.126
+service timestamps log datetime msec
+logging on
+
+ip name-server 172.17.1.126
+
+service password-encryption
+
+aaa new-model
+
+username admin privilege 15 secret passwd
+enable secret passwd
+
+tacacs-server host 172.17.1.126 key passwd
+
+aaa authentication login default local
+aaa authentication login SSH group tacacs+ 
+aaa authentication enable default enable 
+
+ip ssh version 2
+ip ssh time-out 60
+ip ssh authentication-retries 3
+
+ip domain-name my.local
+crypto key generate rsa
+1024
+
+ip access-list extended SSH_ACL
+remark ADMINISTRATOR
+1 permit tcp host 172.17.1.126 any eq 22
+remark DENY_ANY
+10 deny ip any any
+exit
+
+line con 0
+login authentication default
+privilege level 15
+exit
+
+line aux 0
+login authentication default
+privilege level 15
+exit
+
+line vty 0 4
+access-class SSH_ACL in
+login authentication SSH
+transport input ssh
+privilege level 15
+exit
+
+spanning-tree mode rapid-pvst
+
+interface FastEthernet0/0
+no shutdown 
+exit
+
+interface FastEthernet0/0.100
+description MGMT
+encapsulation dot1Q 100
+ip address 172.17.1.124 255.255.255.128
+exit
+
+interface FastEthernet0/0.400
+description VOIP
+encapsulation dot1Q 400
+ip address 172.17.4.254 255.255.255.0
+exit
+
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0.400
+
+telephony-service 
+max-ephones 2
+max-dn 2
+ip source-address 172.17.4.254 port 2222
+exit
+
+ephone-dn 1
+
+number 1001
+exit
+
+ephone-dn 2
+
+number 1002
+exit
+
+ephone 1
+mac-address 000D.BDAB.206B
+button 1:1
+type 7960
+exit
+
+ephone 2
+mac-address 0060.47DC.B56D
+button 1:2
+type 7960
+exit
+
+exit
+
+wr
+
+exit
+
